@@ -1,0 +1,13 @@
+# # MaxUserSettingsResponseBody
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
+**hash** | **string** |  | [optional]
+**result** | **array<string,mixed>** |  | [optional]
+**seq** | **int** |  |
+**user** | [**\Relaya\Sdk\Model\MaxUserSettingsState**](MaxUserSettingsState.md) |  |
+
+[[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
