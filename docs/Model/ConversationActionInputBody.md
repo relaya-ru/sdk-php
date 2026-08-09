@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**action** | **string** |  |
-**chat_id** | **string** |  |
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**action** | **string** | Код действия, которое нужно выполнить. |
+**chat_id** | **string** | Идентификатор адресата в интеграции. Для MAX Bot используйте &#x60;user:1234567890&#x60; для личного диалога или &#x60;chat:1234567890&#x60; для чата. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

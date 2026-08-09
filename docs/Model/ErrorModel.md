@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**detail** | **string** | A human-readable explanation specific to this occurrence of the problem. | [optional]
-**errors** | [**\Relaya\\Sdk\Model\ErrorDetail[]**](ErrorDetail.md) | Optional list of individual error details | [optional]
-**instance** | **string** | A URI reference that identifies the specific occurrence of the problem. | [optional]
-**status** | **int** | HTTP status code | [optional]
-**title** | **string** | A short, human-readable summary of the problem type. This value should not change between occurrences of the error. | [optional]
-**type** | **string** | A URI reference to human-readable documentation for the error. | [optional] [default to 'about:blank']
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**detail** | **string** | Подробности ошибки или текущего состояния. | [optional]
+**errors** | [**\Relaya\Sdk\Model\ErrorDetail[]**](ErrorDetail.md) | Список значений этого поля. | [optional]
+**instance** | **string** | URI или идентификатор конкретного экземпляра ошибки. | [optional]
+**status** | **int** | Текущий статус сущности. | [optional]
+**title** | **string** | Короткий заголовок или имя сущности. | [optional]
+**type** | **string** | Код типа сущности или действия. | [optional] [default to 'about:blank']
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

@@ -1,6 +1,10 @@
-# Relaya PHP SDK
+# Релая PHP SDK
 
-API for Relaya integrations and management
+Public customer API for Relaya SDKs.
+Authenticated with a profile API token (`X-Profile-Token`).
+Staff Admin API is intentionally excluded from this contract.
+Scopes: profiles:read|write, inbox:read|write, webhooks:manage, billing:read|write.
+Профили, сообщения, инбокс, модули, вебхуки и биллинг.
 
 
 ## Installation & Usage
@@ -39,6 +43,28 @@ RELAYA_API_TOKEN=your_token
 RELAYA_API_BASE_URL=https://api.relaya.ru/v1
 ```
 
+### Quick Start (Facade)
+
+```php
+<?php
+
+use Relaya\RelayaApi;
+
+RelayaApi::configure(accessToken: 'YOUR_ACCESS_TOKEN');
+$result = RelayaApi::AccountApi()->getAccountModules();
+print_r($result);
+```
+
+Alias:
+
+```php
+<?php
+
+use Relaya\Api;
+
+$result = Api::AccountApi()->getAccountModules();
+```
+
 ### Manual Installation
 
 Download the files and include `autoload.php`:
@@ -58,269 +84,226 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AccountApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$track_id = 'track_id_example'; // string | Параметр `trackId` из `query`.
 
 try {
-    $result = $apiInstance->getAccountModules();
+    $result = $apiInstance->getProfilesProfileIdIntegrationsIntegrationAuthQr($profile_id, $integration, $track_id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling AccountApi->getAccountModules: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->getProfilesProfileIdIntegrationsIntegrationAuthQr: ', $e->getMessage(), PHP_EOL;
 }
 
 ```
 
 ## API Endpoints
 
-All URIs are relative to *https://api.relaya.ru/v1*
+All URIs are relative to *https://localhost:8485/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AccountApi* | [**getAccountModules**](docs/Api/AccountApi.md#getaccountmodules) | **GET** /account/modules | List account modules
-*AccountApi* | [**getAccountModulesUsage**](docs/Api/AccountApi.md#getaccountmodulesusage) | **GET** /account/modules/usage | Get account module usage
-*AccountApi* | [**putAccountModulesModuleCode**](docs/Api/AccountApi.md#putaccountmodulesmodulecode) | **PUT** /account/modules/{moduleCode} | Update account module
-*AuthApi* | [**authOauthProviderCallbackGet**](docs/Api/AuthApi.md#authoauthprovidercallbackget) | **GET** /auth/oauth/{provider}/callback | OAuth callback
-*AuthApi* | [**authOauthTelegramCompletePost**](docs/Api/AuthApi.md#authoauthtelegramcompletepost) | **POST** /auth/oauth/telegram/complete | OAuth Telegram complete
-*AuthApi* | [**getAuthOauthProviderStart**](docs/Api/AuthApi.md#getauthoauthproviderstart) | **GET** /auth/oauth/{provider}/start | Start OAuth authorization
-*AuthApi* | [**getAuthOauthProviders**](docs/Api/AuthApi.md#getauthoauthproviders) | **GET** /auth/oauth/providers | Get OAuth providers availability
-*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationAuthQr**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationauthqr) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr | Get auth QR
-*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationAuthQrStatus**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationauthqrstatus) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr/status | Get QR auth status
-*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationToken**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationtoken) | **GET** /profiles/{profileId}/integrations/{integration}/token | Get bot token
-*AuthApi* | [**getUsersExists**](docs/Api/AuthApi.md#getusersexists) | **GET** /users/exists | Check if user exists
-*AuthApi* | [**postAuthEmailVerifyConfirm**](docs/Api/AuthApi.md#postauthemailverifyconfirm) | **POST** /auth/email/verify/confirm | Confirm email verification
-*AuthApi* | [**postAuthEmailVerifyRequest**](docs/Api/AuthApi.md#postauthemailverifyrequest) | **POST** /auth/email/verify/request | Request email verification code
-*AuthApi* | [**postAuthOauthPendingCompleteEmail**](docs/Api/AuthApi.md#postauthoauthpendingcompleteemail) | **POST** /auth/oauth/pending/complete-email | Complete OAuth with email
-*AuthApi* | [**postAuthPhoneTelegramConfirm**](docs/Api/AuthApi.md#postauthphonetelegramconfirm) | **POST** /auth/phone/telegram/confirm | Confirm Telegram phone verification
-*AuthApi* | [**postAuthPhoneTelegramStart**](docs/Api/AuthApi.md#postauthphonetelegramstart) | **POST** /auth/phone/telegram/start | Start Telegram phone verification
-*AuthApi* | [**postAuthTokens**](docs/Api/AuthApi.md#postauthtokens) | **POST** /auth/tokens | Create authentication token
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuth2fa**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauth2fa) | **POST** /profiles/{profileId}/integrations/{integration}/auth/2fa | Submit 2FA password
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthLogout**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthlogout) | **POST** /profiles/{profileId}/integrations/{integration}/auth/logout | Logout profile
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphonecode) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/code | Confirm phone auth code
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphonepassword) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/password | Submit phone auth password
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphonestart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/start | Start phone auth
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthsmspoll) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/poll | Poll authorization
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsStart**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthsmsstart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/start | Start SMS authorization
-*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthsmsverify) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/verify | Send authorization code
-*AuthApi* | [**postUsers**](docs/Api/AuthApi.md#postusers) | **POST** /users | Register new user
-*AuthApi* | [**profilesProfileIdIntegrationsIntegrationOauthCallbackGet**](docs/Api/AuthApi.md#profilesprofileidintegrationsintegrationoauthcallbackget) | **GET** /profiles/{profileId}/integrations/{integration}/oauth/callback | VK OAuth callback
-*AuthApi* | [**putProfilesProfileIdIntegrationsIntegrationToken**](docs/Api/AuthApi.md#putprofilesprofileidintegrationsintegrationtoken) | **PUT** /profiles/{profileId}/integrations/{integration}/token | Set bot token
-*BillingApi* | [**billingProviderWebhookPost**](docs/Api/BillingApi.md#billingproviderwebhookpost) | **POST** /billing/provider/webhook | Billing provider webhook
-*BillingApi* | [**getBillingTopups**](docs/Api/BillingApi.md#getbillingtopups) | **GET** /billing/topups | List top-up intents
-*BillingApi* | [**getBillingTopupsTopupId**](docs/Api/BillingApi.md#getbillingtopupstopupid) | **GET** /billing/topups/{topupId} | Get top-up status
-*BillingApi* | [**getBillingTransactions**](docs/Api/BillingApi.md#getbillingtransactions) | **GET** /billing/transactions | List transactions
-*BillingApi* | [**postBillingTopups**](docs/Api/BillingApi.md#postbillingtopups) | **POST** /billing/topups | Create top-up intent
-*BillingApi* | [**postBillingTopupsTopupIdRefresh**](docs/Api/BillingApi.md#postbillingtopupstopupidrefresh) | **POST** /billing/topups/{topupId}/refresh | Refresh top-up status from provider
-*ChatsApi* | [**deleteProfilesProfileIdIntegrationsIntegrationFoldersFolderId**](docs/Api/ChatsApi.md#deleteprofilesprofileidintegrationsintegrationfoldersfolderid) | **DELETE** /profiles/{profileId}/integrations/{integration}/folders/{folderId} | Delete MAX folder
-*ChatsApi* | [**getProfilesProfileIdIntegrationsIntegrationFolders**](docs/Api/ChatsApi.md#getprofilesprofileidintegrationsintegrationfolders) | **GET** /profiles/{profileId}/integrations/{integration}/folders | List MAX folders
-*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsByIds**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsbyids) | **POST** /profiles/{profileId}/integrations/{integration}/chats/by-ids | Get chats by IDs
-*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsSubscription**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatssubscription) | **POST** /profiles/{profileId}/integrations/{integration}/chats/subscription | Subscribe/unsubscribe chat updates
-*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationFolders**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationfolders) | **POST** /profiles/{profileId}/integrations/{integration}/folders | Create MAX folder
-*ChatsApi* | [**putProfilesProfileIdIntegrationsIntegrationFoldersOrder**](docs/Api/ChatsApi.md#putprofilesprofileidintegrationsintegrationfoldersorder) | **PUT** /profiles/{profileId}/integrations/{integration}/folders/order | Reorder MAX folders
-*DashboardApi* | [**getUsersMeDashboardSummary**](docs/Api/DashboardApi.md#getusersmedashboardsummary) | **GET** /users/me/dashboard-summary | Get dashboard summary
-*InboxApi* | [**getProfilesProfileIdIntegrationsIntegrationInboxConversations**](docs/Api/InboxApi.md#getprofilesprofileidintegrationsintegrationinboxconversations) | **GET** /profiles/{profileId}/integrations/{integration}/inbox/conversations | List inbox conversations
-*InboxApi* | [**getProfilesProfileIdIntegrationsIntegrationInboxMessages**](docs/Api/InboxApi.md#getprofilesprofileidintegrationsintegrationinboxmessages) | **GET** /profiles/{profileId}/integrations/{integration}/inbox/messages | List inbox messages
-*InboxApi* | [**getUsersMeInboxConversations**](docs/Api/InboxApi.md#getusersmeinboxconversations) | **GET** /users/me/inbox/conversations | List omnichannel inbox conversations
-*InboxApi* | [**getUsersMeInboxMessages**](docs/Api/InboxApi.md#getusersmeinboxmessages) | **GET** /users/me/inbox/messages | List omnichannel inbox messages
-*InboxApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxConversationsAction**](docs/Api/InboxApi.md#postprofilesprofileidintegrationsintegrationinboxconversationsaction) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/conversations/action | Inbox conversation action
-*InboxApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxConversationsAvatar**](docs/Api/InboxApi.md#postprofilesprofileidintegrationsintegrationinboxconversationsavatar) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/conversations/avatar | Inbox conversation avatar
-*InboxApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxRead**](docs/Api/InboxApi.md#postprofilesprofileidintegrationsintegrationinboxread) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/read | Mark inbox read
-*InboxApi* | [**postUsersMeInboxConversationsAction**](docs/Api/InboxApi.md#postusersmeinboxconversationsaction) | **POST** /users/me/inbox/conversations/action | Toggle omnichannel conversation action
-*InboxApi* | [**postUsersMeInboxConversationsAvatar**](docs/Api/InboxApi.md#postusersmeinboxconversationsavatar) | **POST** /users/me/inbox/conversations/avatar | Set omnichannel conversation avatar
-*InboxApi* | [**postUsersMeInboxConversationsTitle**](docs/Api/InboxApi.md#postusersmeinboxconversationstitle) | **POST** /users/me/inbox/conversations/title | Set omnichannel conversation title
-*InboxApi* | [**postUsersMeInboxRead**](docs/Api/InboxApi.md#postusersmeinboxread) | **POST** /users/me/inbox/read | Mark omnichannel conversation as read
-*InboxApi* | [**postUsersMeInboxSend**](docs/Api/InboxApi.md#postusersmeinboxsend) | **POST** /users/me/inbox/send | Send omnichannel inbox message
-*IntegrationsApi* | [**deleteProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/IntegrationsApi.md#deleteprofilesprofileidintegrationsintegrationsession) | **DELETE** /profiles/{profileId}/integrations/{integration}/session | Clear integration session
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationAuthQr**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationauthqr) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr | Get auth QR
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationAuthQrStatus**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationauthqrstatus) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr/status | Get QR auth status
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationInboxConversations**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationinboxconversations) | **GET** /profiles/{profileId}/integrations/{integration}/inbox/conversations | List inbox conversations
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationInboxMessages**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationinboxmessages) | **GET** /profiles/{profileId}/integrations/{integration}/inbox/messages | List inbox messages
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationOverview**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationoverview) | **GET** /profiles/{profileId}/integrations/{integration}/overview | Get profile overview
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationsession) | **GET** /profiles/{profileId}/integrations/{integration}/session | Get integration session
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationSessionChats**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationsessionchats) | **GET** /profiles/{profileId}/integrations/{integration}/session/chats | Get integration chats
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationStatus**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationstatus) | **GET** /profiles/{profileId}/integrations/{integration}/status | Get profile status
-*IntegrationsApi* | [**getProfilesProfileIdIntegrationsIntegrationToken**](docs/Api/IntegrationsApi.md#getprofilesprofileidintegrationsintegrationtoken) | **GET** /profiles/{profileId}/integrations/{integration}/token | Get bot token
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationAuth2fa**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationauth2fa) | **POST** /profiles/{profileId}/integrations/{integration}/auth/2fa | Submit 2FA password
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthLogout**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationauthlogout) | **POST** /profiles/{profileId}/integrations/{integration}/auth/logout | Logout profile
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationauthphonecode) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/code | Confirm phone auth code
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationauthphonepassword) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/password | Submit phone auth password
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationauthphonestart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/start | Start phone auth
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxConversationsAction**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationinboxconversationsaction) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/conversations/action | Inbox conversation action
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxConversationsAvatar**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationinboxconversationsavatar) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/conversations/avatar | Inbox conversation avatar
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxRead**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationinboxread) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/read | Mark inbox read
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationMessages**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationmessages) | **POST** /profiles/{profileId}/integrations/{integration}/messages | Send message
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesDelete**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationmessagesdelete) | **POST** /profiles/{profileId}/integrations/{integration}/messages/delete | Delete message
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesEdit**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationmessagesedit) | **POST** /profiles/{profileId}/integrations/{integration}/messages/edit | Edit message
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesForward**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationmessagesforward) | **POST** /profiles/{profileId}/integrations/{integration}/messages/forward | Forward message
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesHistory**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationmessageshistory) | **POST** /profiles/{profileId}/integrations/{integration}/messages/history | Get chat history
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesReply**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationmessagesreply) | **POST** /profiles/{profileId}/integrations/{integration}/messages/reply | Reply message
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionEvents**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationsessionevents) | **POST** /profiles/{profileId}/integrations/{integration}/session/events | Get integration events
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionStart**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationsessionstart) | **POST** /profiles/{profileId}/integrations/{integration}/session/start | Start integration session
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionStop**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationsessionstop) | **POST** /profiles/{profileId}/integrations/{integration}/session/stop | Stop integration session
-*IntegrationsApi* | [**postProfilesProfileIdIntegrationsIntegrationSync**](docs/Api/IntegrationsApi.md#postprofilesprofileidintegrationsintegrationsync) | **POST** /profiles/{profileId}/integrations/{integration}/sync | Sync integration profile
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationMessagesFilesPost**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationmessagesfilespost) | **POST** /profiles/{profileId}/integrations/{integration}/messages/files | Upload file
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksCheckPost**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhookscheckpost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/check | Check webhook endpoint
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksDlqGet**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksdlqget) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/dlq | List webhook DLQ
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksDlqRedrivePost**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksdlqredrivepost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/dlq/redrive | Redrive webhook DLQ
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksGet**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksget) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks | List webhooks
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdDelete**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksiddelete) | **DELETE** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Delete webhook
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdGet**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksidget) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Get webhook
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdPatch**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksidpatch) | **PATCH** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Update webhook
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdTestPost**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhooksidtestpost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/{id}/test | Test webhook
-*IntegrationsApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksPost**](docs/Api/IntegrationsApi.md#profilesprofileidintegrationsintegrationwebhookspost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks | Create webhook
-*IntegrationsApi* | [**putProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/IntegrationsApi.md#putprofilesprofileidintegrationsintegrationsession) | **PUT** /profiles/{profileId}/integrations/{integration}/session | Set integration session
-*IntegrationsApi* | [**putProfilesProfileIdIntegrationsIntegrationToken**](docs/Api/IntegrationsApi.md#putprofilesprofileidintegrationsintegrationtoken) | **PUT** /profiles/{profileId}/integrations/{integration}/token | Set bot token
-*MaxApi* | [**deleteProfilesProfileIdIntegrationsIntegrationFoldersFolderId**](docs/Api/MaxApi.md#deleteprofilesprofileidintegrationsintegrationfoldersfolderid) | **DELETE** /profiles/{profileId}/integrations/{integration}/folders/{folderId} | Delete MAX folder
-*MaxApi* | [**deleteProfilesProfileIdIntegrationsIntegrationMessagesReactions**](docs/Api/MaxApi.md#deleteprofilesprofileidintegrationsintegrationmessagesreactions) | **DELETE** /profiles/{profileId}/integrations/{integration}/messages/reactions | Remove reaction
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationContacts**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationcontacts) | **GET** /profiles/{profileId}/integrations/{integration}/contacts | List contacts
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationContactsBlocked**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationcontactsblocked) | **GET** /profiles/{profileId}/integrations/{integration}/contacts/blocked | List blocked contacts
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationDevices**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationdevices) | **GET** /profiles/{profileId}/integrations/{integration}/devices | List active MAX devices
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationFolders**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationfolders) | **GET** /profiles/{profileId}/integrations/{integration}/folders | List MAX folders
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationSessions**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationsessions) | **GET** /profiles/{profileId}/integrations/{integration}/sessions | List active MAX sessions/devices
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationSettings**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationsettings) | **GET** /profiles/{profileId}/integrations/{integration}/settings | Get settings
-*MaxApi* | [**getProfilesProfileIdIntegrationsIntegrationSettingsUser**](docs/Api/MaxApi.md#getprofilesprofileidintegrationsintegrationsettingsuser) | **GET** /profiles/{profileId}/integrations/{integration}/settings/user | Get MAX account settings
-*MaxApi* | [**patchProfilesProfileIdIntegrationsIntegrationAccountProfile**](docs/Api/MaxApi.md#patchprofilesprofileidintegrationsintegrationaccountprofile) | **PATCH** /profiles/{profileId}/integrations/{integration}/account/profile | Update MAX profile name/description
-*MaxApi* | [**patchProfilesProfileIdIntegrationsIntegrationSettings**](docs/Api/MaxApi.md#patchprofilesprofileidintegrationsintegrationsettings) | **PATCH** /profiles/{profileId}/integrations/{integration}/settings | Update settings
-*MaxApi* | [**patchProfilesProfileIdIntegrationsIntegrationSettingsUser**](docs/Api/MaxApi.md#patchprofilesprofileidintegrationsintegrationsettingsuser) | **PATCH** /profiles/{profileId}/integrations/{integration}/settings/user | Update MAX account settings
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationauthsmspoll) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/poll | Poll authorization
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsStart**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationauthsmsstart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/start | Start SMS authorization
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationauthsmsverify) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/verify | Send authorization code
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsByIds**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationchatsbyids) | **POST** /profiles/{profileId}/integrations/{integration}/chats/by-ids | Get chats by IDs
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsSubscription**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationchatssubscription) | **POST** /profiles/{profileId}/integrations/{integration}/chats/subscription | Subscribe/unsubscribe chat updates
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsByIds**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationcontactsbyids) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/by-ids | Get contacts by IDs
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsLastOnline**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationcontactslastonline) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/last-online | Get contacts last online by IDs
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsSearch**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationcontactssearch) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/search | Search contact by phone
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationFolders**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationfolders) | **POST** /profiles/{profileId}/integrations/{integration}/folders | Create MAX folder
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesReactions**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationmessagesreactions) | **POST** /profiles/{profileId}/integrations/{integration}/messages/reactions | Send reaction
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesRead**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationmessagesread) | **POST** /profiles/{profileId}/integrations/{integration}/messages/read | Mark chat read
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesTyping**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationmessagestyping) | **POST** /profiles/{profileId}/integrations/{integration}/messages/typing | Send typing status
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesUnread**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationmessagesunread) | **POST** /profiles/{profileId}/integrations/{integration}/messages/unread | Mark chat as unread
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationReboot**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationreboot) | **POST** /profiles/{profileId}/integrations/{integration}/reboot | Reboot profile
-*MaxApi* | [**postProfilesProfileIdIntegrationsIntegrationVideosResolve**](docs/Api/MaxApi.md#postprofilesprofileidintegrationsintegrationvideosresolve) | **POST** /profiles/{profileId}/integrations/{integration}/videos/resolve | Resolve video links by video ID
-*MaxApi* | [**profilesProfileIdIntegrationsIntegrationAvatarPost**](docs/Api/MaxApi.md#profilesprofileidintegrationsintegrationavatarpost) | **POST** /profiles/{profileId}/integrations/{integration}/avatar | Set profile picture
-*MaxApi* | [**putProfilesProfileIdIntegrationsIntegrationFoldersOrder**](docs/Api/MaxApi.md#putprofilesprofileidintegrationsintegrationfoldersorder) | **PUT** /profiles/{profileId}/integrations/{integration}/folders/order | Reorder MAX folders
-*MessagesApi* | [**deleteProfilesProfileIdIntegrationsIntegrationMessagesReactions**](docs/Api/MessagesApi.md#deleteprofilesprofileidintegrationsintegrationmessagesreactions) | **DELETE** /profiles/{profileId}/integrations/{integration}/messages/reactions | Remove reaction
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessages**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessages) | **POST** /profiles/{profileId}/integrations/{integration}/messages | Send message
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesDelete**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesdelete) | **POST** /profiles/{profileId}/integrations/{integration}/messages/delete | Delete message
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesEdit**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesedit) | **POST** /profiles/{profileId}/integrations/{integration}/messages/edit | Edit message
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesForward**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesforward) | **POST** /profiles/{profileId}/integrations/{integration}/messages/forward | Forward message
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesHistory**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessageshistory) | **POST** /profiles/{profileId}/integrations/{integration}/messages/history | Get chat history
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesReactions**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesreactions) | **POST** /profiles/{profileId}/integrations/{integration}/messages/reactions | Send reaction
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesRead**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesread) | **POST** /profiles/{profileId}/integrations/{integration}/messages/read | Mark chat read
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesReply**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesreply) | **POST** /profiles/{profileId}/integrations/{integration}/messages/reply | Reply message
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesTyping**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagestyping) | **POST** /profiles/{profileId}/integrations/{integration}/messages/typing | Send typing status
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesUnread**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesunread) | **POST** /profiles/{profileId}/integrations/{integration}/messages/unread | Mark chat as unread
-*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationVideosResolve**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationvideosresolve) | **POST** /profiles/{profileId}/integrations/{integration}/videos/resolve | Resolve video links by video ID
-*MessagesApi* | [**profilesProfileIdIntegrationsIntegrationMessagesFilesPost**](docs/Api/MessagesApi.md#profilesprofileidintegrationsintegrationmessagesfilespost) | **POST** /profiles/{profileId}/integrations/{integration}/messages/files | Upload file
-*ModulesApi* | [**getAccountModules**](docs/Api/ModulesApi.md#getaccountmodules) | **GET** /account/modules | List account modules
-*ModulesApi* | [**getAccountModulesUsage**](docs/Api/ModulesApi.md#getaccountmodulesusage) | **GET** /account/modules/usage | Get account module usage
-*ModulesApi* | [**putAccountModulesModuleCode**](docs/Api/ModulesApi.md#putaccountmodulesmodulecode) | **PUT** /account/modules/{moduleCode} | Update account module
-*NotificationsApi* | [**getNotifications**](docs/Api/NotificationsApi.md#getnotifications) | **GET** /notifications | List notifications
-*NotificationsApi* | [**getNotificationsUnread**](docs/Api/NotificationsApi.md#getnotificationsunread) | **GET** /notifications/unread | Get unread count
-*NotificationsApi* | [**postNotificationsMarkAll**](docs/Api/NotificationsApi.md#postnotificationsmarkall) | **POST** /notifications/mark-all | Mark all as read
-*NotificationsApi* | [**postNotificationsMarkRead**](docs/Api/NotificationsApi.md#postnotificationsmarkread) | **POST** /notifications/mark-read | Mark as read
-*ProfilesApi* | [**deleteProfilesProfileId**](docs/Api/ProfilesApi.md#deleteprofilesprofileid) | **DELETE** /profiles/{profileId} | Delete profile
-*ProfilesApi* | [**getProfiles**](docs/Api/ProfilesApi.md#getprofiles) | **GET** /profiles | List profiles
-*ProfilesApi* | [**getProfilesProfileId**](docs/Api/ProfilesApi.md#getprofilesprofileid) | **GET** /profiles/{profileId} | Get profile
-*ProfilesApi* | [**getProfilesProfileIdActions**](docs/Api/ProfilesApi.md#getprofilesprofileidactions) | **GET** /profiles/{profileId}/actions | Get profile actions
-*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationContacts**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationcontacts) | **GET** /profiles/{profileId}/integrations/{integration}/contacts | List contacts
-*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationContactsBlocked**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationcontactsblocked) | **GET** /profiles/{profileId}/integrations/{integration}/contacts/blocked | List blocked contacts
-*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationOverview**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationoverview) | **GET** /profiles/{profileId}/integrations/{integration}/overview | Get profile overview
-*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationStatus**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationstatus) | **GET** /profiles/{profileId}/integrations/{integration}/status | Get profile status
-*ProfilesApi* | [**patchProfilesProfileId**](docs/Api/ProfilesApi.md#patchprofilesprofileid) | **PATCH** /profiles/{profileId} | Update profile
-*ProfilesApi* | [**patchProfilesProfileIdIntegrationsIntegrationAccountProfile**](docs/Api/ProfilesApi.md#patchprofilesprofileidintegrationsintegrationaccountprofile) | **PATCH** /profiles/{profileId}/integrations/{integration}/account/profile | Update MAX profile name/description
-*ProfilesApi* | [**postProfiles**](docs/Api/ProfilesApi.md#postprofiles) | **POST** /profiles | Create profile
-*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsByIds**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactsbyids) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/by-ids | Get contacts by IDs
-*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsLastOnline**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactslastonline) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/last-online | Get contacts last online by IDs
-*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsSearch**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactssearch) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/search | Search contact by phone
-*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationReboot**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationreboot) | **POST** /profiles/{profileId}/integrations/{integration}/reboot | Reboot profile
-*ProfilesApi* | [**postProfilesProfileIdRenew**](docs/Api/ProfilesApi.md#postprofilesprofileidrenew) | **POST** /profiles/{profileId}/renew | Renew profile
-*ProfilesApi* | [**profilesProfileIdIntegrationsIntegrationAvatarPost**](docs/Api/ProfilesApi.md#profilesprofileidintegrationsintegrationavatarpost) | **POST** /profiles/{profileId}/integrations/{integration}/avatar | Set profile picture
-*ProfilesApi* | [**putProfilesProfileIdAutoRenew**](docs/Api/ProfilesApi.md#putprofilesprofileidautorenew) | **PUT** /profiles/{profileId}/auto-renew | Update auto-renew
-*ScenariosApi* | [**usersMeScenariosGet**](docs/Api/ScenariosApi.md#usersmescenariosget) | **GET** /users/me/scenarios | List account scenarios
-*ScenariosApi* | [**usersMeScenariosIdDelete**](docs/Api/ScenariosApi.md#usersmescenariosiddelete) | **DELETE** /users/me/scenarios/{id} | Delete account scenario
-*ScenariosApi* | [**usersMeScenariosPut**](docs/Api/ScenariosApi.md#usersmescenariosput) | **PUT** /users/me/scenarios | Upsert account scenario
-*SessionsApi* | [**deleteProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/SessionsApi.md#deleteprofilesprofileidintegrationsintegrationsession) | **DELETE** /profiles/{profileId}/integrations/{integration}/session | Clear integration session
-*SessionsApi* | [**deleteUsersMeSessionsSessionId**](docs/Api/SessionsApi.md#deleteusersmesessionssessionid) | **DELETE** /users/me/sessions/{sessionId} | Revoke session
-*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationDevices**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationdevices) | **GET** /profiles/{profileId}/integrations/{integration}/devices | List active MAX devices
-*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationsession) | **GET** /profiles/{profileId}/integrations/{integration}/session | Get integration session
-*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationSessionChats**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationsessionchats) | **GET** /profiles/{profileId}/integrations/{integration}/session/chats | Get integration chats
-*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationSessions**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationsessions) | **GET** /profiles/{profileId}/integrations/{integration}/sessions | List active MAX sessions/devices
-*SessionsApi* | [**getUsersMeSessions**](docs/Api/SessionsApi.md#getusersmesessions) | **GET** /users/me/sessions | List user sessions
-*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionEvents**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionevents) | **POST** /profiles/{profileId}/integrations/{integration}/session/events | Get integration events
-*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionStart**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionstart) | **POST** /profiles/{profileId}/integrations/{integration}/session/start | Start integration session
-*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionStop**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionstop) | **POST** /profiles/{profileId}/integrations/{integration}/session/stop | Stop integration session
-*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSync**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsync) | **POST** /profiles/{profileId}/integrations/{integration}/sync | Sync integration profile
-*SessionsApi* | [**postUsersMeSessionsRevokeAll**](docs/Api/SessionsApi.md#postusersmesessionsrevokeall) | **POST** /users/me/sessions/revoke-all | Revoke all sessions
-*SessionsApi* | [**postUsersMeSessionsRevokeOthers**](docs/Api/SessionsApi.md#postusersmesessionsrevokeothers) | **POST** /users/me/sessions/revoke-others | Revoke other sessions
-*SessionsApi* | [**putProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/SessionsApi.md#putprofilesprofileidintegrationsintegrationsession) | **PUT** /profiles/{profileId}/integrations/{integration}/session | Set integration session
-*SettingsApi* | [**getProfilesProfileIdIntegrationsIntegrationSettings**](docs/Api/SettingsApi.md#getprofilesprofileidintegrationsintegrationsettings) | **GET** /profiles/{profileId}/integrations/{integration}/settings | Get settings
-*SettingsApi* | [**getProfilesProfileIdIntegrationsIntegrationSettingsUser**](docs/Api/SettingsApi.md#getprofilesprofileidintegrationsintegrationsettingsuser) | **GET** /profiles/{profileId}/integrations/{integration}/settings/user | Get MAX account settings
-*SettingsApi* | [**patchProfilesProfileIdIntegrationsIntegrationSettings**](docs/Api/SettingsApi.md#patchprofilesprofileidintegrationsintegrationsettings) | **PATCH** /profiles/{profileId}/integrations/{integration}/settings | Update settings
-*SettingsApi* | [**patchProfilesProfileIdIntegrationsIntegrationSettingsUser**](docs/Api/SettingsApi.md#patchprofilesprofileidintegrationsintegrationsettingsuser) | **PATCH** /profiles/{profileId}/integrations/{integration}/settings/user | Update MAX account settings
-*SystemApi* | [**docsGet**](docs/Api/SystemApi.md#docsget) | **GET** /docs | API reference
-*SystemApi* | [**getStatus**](docs/Api/SystemApi.md#getstatus) | **GET** /status | Service status
-*TokensApi* | [**deleteUsersMeApiTokensId**](docs/Api/TokensApi.md#deleteusersmeapitokensid) | **DELETE** /users/me/api-tokens/{id} | Revoke API token
-*TokensApi* | [**getUsersMeApiScopes**](docs/Api/TokensApi.md#getusersmeapiscopes) | **GET** /users/me/api-scopes | List available API scopes
-*TokensApi* | [**getUsersMeApiTokens**](docs/Api/TokensApi.md#getusersmeapitokens) | **GET** /users/me/api-tokens | List API tokens
-*TokensApi* | [**postUsersMeApiTokens**](docs/Api/TokensApi.md#postusersmeapitokens) | **POST** /users/me/api-tokens | Create API token
-*TokensApi* | [**postUsersMeApiTokensIdRotate**](docs/Api/TokensApi.md#postusersmeapitokensidrotate) | **POST** /users/me/api-tokens/{id}/rotate | Rotate API token
-*UsersApi* | [**getUsersMe**](docs/Api/UsersApi.md#getusersme) | **GET** /users/me | Get current user
-*UsersApi* | [**getUsersMeDashboardSummary**](docs/Api/UsersApi.md#getusersmedashboardsummary) | **GET** /users/me/dashboard-summary | Get dashboard summary
-*UsersApi* | [**getUsersMeInboxConversations**](docs/Api/UsersApi.md#getusersmeinboxconversations) | **GET** /users/me/inbox/conversations | List omnichannel inbox conversations
-*UsersApi* | [**getUsersMeInboxMessages**](docs/Api/UsersApi.md#getusersmeinboxmessages) | **GET** /users/me/inbox/messages | List omnichannel inbox messages
-*UsersApi* | [**postUsersMeInboxConversationsAction**](docs/Api/UsersApi.md#postusersmeinboxconversationsaction) | **POST** /users/me/inbox/conversations/action | Toggle omnichannel conversation action
-*UsersApi* | [**postUsersMeInboxConversationsAvatar**](docs/Api/UsersApi.md#postusersmeinboxconversationsavatar) | **POST** /users/me/inbox/conversations/avatar | Set omnichannel conversation avatar
-*UsersApi* | [**postUsersMeInboxConversationsTitle**](docs/Api/UsersApi.md#postusersmeinboxconversationstitle) | **POST** /users/me/inbox/conversations/title | Set omnichannel conversation title
-*UsersApi* | [**postUsersMeInboxRead**](docs/Api/UsersApi.md#postusersmeinboxread) | **POST** /users/me/inbox/read | Mark omnichannel conversation as read
-*UsersApi* | [**postUsersMeInboxSend**](docs/Api/UsersApi.md#postusersmeinboxsend) | **POST** /users/me/inbox/send | Send omnichannel inbox message
-*UsersApi* | [**postUsersMePassword**](docs/Api/UsersApi.md#postusersmepassword) | **POST** /users/me/password | Change current user password
-*UsersApi* | [**usersMeScenariosGet**](docs/Api/UsersApi.md#usersmescenariosget) | **GET** /users/me/scenarios | List account scenarios
-*UsersApi* | [**usersMeScenariosIdDelete**](docs/Api/UsersApi.md#usersmescenariosiddelete) | **DELETE** /users/me/scenarios/{id} | Delete account scenario
-*UsersApi* | [**usersMeScenariosPut**](docs/Api/UsersApi.md#usersmescenariosput) | **PUT** /users/me/scenarios | Upsert account scenario
-*VkApi* | [**profilesProfileIdIntegrationsIntegrationOauthCallbackGet**](docs/Api/VkApi.md#profilesprofileidintegrationsintegrationoauthcallbackget) | **GET** /profiles/{profileId}/integrations/{integration}/oauth/callback | VK OAuth callback
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksCheckPost**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhookscheckpost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/check | Check webhook endpoint
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksDlqGet**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksdlqget) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/dlq | List webhook DLQ
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksDlqRedrivePost**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksdlqredrivepost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/dlq/redrive | Redrive webhook DLQ
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksGet**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksget) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks | List webhooks
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdDelete**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksiddelete) | **DELETE** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Delete webhook
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdGet**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksidget) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Get webhook
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdPatch**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksidpatch) | **PATCH** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Update webhook
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksIdTestPost**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhooksidtestpost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/{id}/test | Test webhook
-*WebhooksApi* | [**profilesProfileIdIntegrationsIntegrationWebhooksPost**](docs/Api/WebhooksApi.md#profilesprofileidintegrationsintegrationwebhookspost) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks | Create webhook
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationAuthQr**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationauthqr) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr | Получить QR-код для авторизации
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationAuthQrStatus**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationauthqrstatus) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr/status | Получить статус QR-авторизации
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationGroups**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationgroups) | **GET** /profiles/{profileId}/integrations/{integration}/groups | Получить группы VK
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationOauthStart**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationoauthstart) | **GET** /profiles/{profileId}/integrations/{integration}/oauth/start | Начать OAuth для VK
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationSmtp**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationsmtp) | **GET** /profiles/{profileId}/integrations/{integration}/smtp | Получить SMTP-настройки профиля
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationToken**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationtoken) | **GET** /profiles/{profileId}/integrations/{integration}/token | Получить токен бота
+*AuthApi* | [**getProfilesProfileIdIntegrationsIntegrationWabaTemplates**](docs/Api/AuthApi.md#getprofilesprofileidintegrationsintegrationwabatemplates) | **GET** /profiles/{profileId}/integrations/{integration}/waba/templates | Шаблоны WABA
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuth2fa**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauth2fa) | **POST** /profiles/{profileId}/integrations/{integration}/auth/2fa | Отправить пароль 2FA
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthLogout**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthlogout) | **POST** /profiles/{profileId}/integrations/{integration}/auth/logout | Выйти из интеграции
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphonecode) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/code | Подтвердить код авторизации по телефону
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphoneconfirm) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/confirm | Подтвердить вход по телефону
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphonepassword) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/password | Отправить пароль второго фактора по телефону
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthphonestart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/start | Начать авторизацию по телефону
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthsmspoll) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/poll | Проверить статус SMS-авторизации (MAX)
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsStart**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthsmsstart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/start | Начать SMS-авторизацию (MAX)
+*AuthApi* | [**postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify**](docs/Api/AuthApi.md#postprofilesprofileidintegrationsintegrationauthsmsverify) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/verify | Отправить код авторизации (MAX)
+*AuthApi* | [**putProfilesProfileIdIntegrationsIntegrationGroup**](docs/Api/AuthApi.md#putprofilesprofileidintegrationsintegrationgroup) | **PUT** /profiles/{profileId}/integrations/{integration}/group | Сохранить группу VK
+*AuthApi* | [**putProfilesProfileIdIntegrationsIntegrationSmtp**](docs/Api/AuthApi.md#putprofilesprofileidintegrationsintegrationsmtp) | **PUT** /profiles/{profileId}/integrations/{integration}/smtp | Сохранить SMTP-настройки профиля
+*AuthApi* | [**putProfilesProfileIdIntegrationsIntegrationToken**](docs/Api/AuthApi.md#putprofilesprofileidintegrationsintegrationtoken) | **PUT** /profiles/{profileId}/integrations/{integration}/token | Сохранить токен бота
+*BillingApi* | [**getBillingCompanyLookup**](docs/Api/BillingApi.md#getbillingcompanylookup) | **GET** /billing/company-lookup | Подсказки по организации
+*BillingApi* | [**getBillingInvoice**](docs/Api/BillingApi.md#getbillinginvoice) | **GET** /billing/invoices/{invoiceId} | Карточка счёта
+*BillingApi* | [**getBillingInvoices**](docs/Api/BillingApi.md#getbillinginvoices) | **GET** /billing/invoices | Список счетов
+*BillingApi* | [**getBillingInvoicesInvoiceIdAct**](docs/Api/BillingApi.md#getbillinginvoicesinvoiceidact) | **GET** /billing/invoices/{invoiceId}/act | Скачать акт по счёту
+*BillingApi* | [**getBillingLegalProfile**](docs/Api/BillingApi.md#getbillinglegalprofile) | **GET** /billing/legal-profile | Юридический профиль
+*BillingApi* | [**getBillingTopups**](docs/Api/BillingApi.md#getbillingtopups) | **GET** /billing/topups | Пополнения
+*BillingApi* | [**getBillingTopupsTopupId**](docs/Api/BillingApi.md#getbillingtopupstopupid) | **GET** /billing/topups/{topupId} | Статус пополнения
+*BillingApi* | [**getBillingTransactions**](docs/Api/BillingApi.md#getbillingtransactions) | **GET** /billing/transactions | Транзакции
+*BillingApi* | [**postBillingInvoiceRefresh**](docs/Api/BillingApi.md#postbillinginvoicerefresh) | **POST** /billing/invoices/{invoiceId}/refresh | Обновить статус счёта
+*BillingApi* | [**postBillingInvoices**](docs/Api/BillingApi.md#postbillinginvoices) | **POST** /billing/invoices | Выставить счёт
+*BillingApi* | [**postBillingTopups**](docs/Api/BillingApi.md#postbillingtopups) | **POST** /billing/topups | Создать пополнение
+*BillingApi* | [**postBillingTopupsTopupIdRefresh**](docs/Api/BillingApi.md#postbillingtopupstopupidrefresh) | **POST** /billing/topups/{topupId}/refresh | Обновить статус пополнения
+*BillingApi* | [**putBillingLegalProfile**](docs/Api/BillingApi.md#putbillinglegalprofile) | **PUT** /billing/legal-profile | Сохранить юридический профиль
+*ChatsApi* | [**deleteProfilesProfileIdIntegrationsIntegrationFoldersFolderId**](docs/Api/ChatsApi.md#deleteprofilesprofileidintegrationsintegrationfoldersfolderid) | **DELETE** /profiles/{profileId}/integrations/{integration}/folders/{folderId} | Удалить папку чатов (MAX)
+*ChatsApi* | [**getProfilesProfileIdIntegrationsIntegrationFolders**](docs/Api/ChatsApi.md#getprofilesprofileidintegrationsintegrationfolders) | **GET** /profiles/{profileId}/integrations/{integration}/folders | Получить папки чатов (MAX)
+*ChatsApi* | [**patchProfilesProfileIdIntegrationsIntegrationChatsUpdate**](docs/Api/ChatsApi.md#patchprofilesprofileidintegrationsintegrationchatsupdate) | **PATCH** /profiles/{profileId}/integrations/{integration}/chats/update | Обновить MAX-чат
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsAdmin**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsadmin) | **POST** /profiles/{profileId}/integrations/{integration}/chats/admin | Изменить права администратора в Telegram
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsArchive**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsarchive) | **POST** /profiles/{profileId}/integrations/{integration}/chats/archive | Архивировать или вернуть Telegram-диалог
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsBan**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsban) | **POST** /profiles/{profileId}/integrations/{integration}/chats/ban | Изменить ограничения участника в Telegram
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsByIds**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsbyids) | **POST** /profiles/{profileId}/integrations/{integration}/chats/by-ids | Получить чаты по ID (MAX)
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsInviteCheck**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsinvitecheck) | **POST** /profiles/{profileId}/integrations/{integration}/chats/invite/check | Проверить Telegram invite-ссылку
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsInviteDelete**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsinvitedelete) | **POST** /profiles/{profileId}/integrations/{integration}/chats/invite/delete | Удалить Telegram invite-ссылку
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsInviteEdit**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsinviteedit) | **POST** /profiles/{profileId}/integrations/{integration}/chats/invite/edit | Изменить Telegram invite-ссылку
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsInviteExport**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsinviteexport) | **POST** /profiles/{profileId}/integrations/{integration}/chats/invite/export | Создать Telegram invite-ссылку
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsInviteImport**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsinviteimport) | **POST** /profiles/{profileId}/integrations/{integration}/chats/invite/import | Принять Telegram invite-ссылку
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsInvites**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsinvites) | **POST** /profiles/{profileId}/integrations/{integration}/chats/invites | Получить список Telegram invite-ссылок чата
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsJoin**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsjoin) | **POST** /profiles/{profileId}/integrations/{integration}/chats/join | Вступить в чат или канал
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsLeave**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsleave) | **POST** /profiles/{profileId}/integrations/{integration}/chats/leave | Покинуть чат или канал
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsLinkInfo**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatslinkinfo) | **POST** /profiles/{profileId}/integrations/{integration}/chats/link-info | Разрешить MAX-ссылку
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsList**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatslist) | **POST** /profiles/{profileId}/integrations/{integration}/chats/list | Получить список чатов (MAX)
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsMembers**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsmembers) | **POST** /profiles/{profileId}/integrations/{integration}/chats/members | Получить участников MAX-чата
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsMembersInvite**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsmembersinvite) | **POST** /profiles/{profileId}/integrations/{integration}/chats/members/invite | Пригласить участников в MAX-канал
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsMute**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsmute) | **POST** /profiles/{profileId}/integrations/{integration}/chats/mute | Изменить mute-настройки Telegram-диалога
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsPin**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatspin) | **POST** /profiles/{profileId}/integrations/{integration}/chats/pin | Закрепить или открепить Telegram-диалог
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsResolve**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatsresolve) | **POST** /profiles/{profileId}/integrations/{integration}/chats/resolve | Найти чат по телефону или username
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationChatsSubscription**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationchatssubscription) | **POST** /profiles/{profileId}/integrations/{integration}/chats/subscription | Изменить подписку на обновления чата (MAX)
+*ChatsApi* | [**postProfilesProfileIdIntegrationsIntegrationFolders**](docs/Api/ChatsApi.md#postprofilesprofileidintegrationsintegrationfolders) | **POST** /profiles/{profileId}/integrations/{integration}/folders | Создать папку чатов (MAX)
+*ChatsApi* | [**putProfilesProfileIdIntegrationsIntegrationFoldersOrder**](docs/Api/ChatsApi.md#putprofilesprofileidintegrationsintegrationfoldersorder) | **PUT** /profiles/{profileId}/integrations/{integration}/folders/order | Изменить порядок папок (MAX)
+*InboxApi* | [**getProfilesProfileIdIntegrationsIntegrationInboxConversations**](docs/Api/InboxApi.md#getprofilesprofileidintegrationsintegrationinboxconversations) | **GET** /profiles/{profileId}/integrations/{integration}/inbox/conversations | Получить диалоги inbox профиля
+*InboxApi* | [**getProfilesProfileIdIntegrationsIntegrationInboxMessages**](docs/Api/InboxApi.md#getprofilesprofileidintegrationsintegrationinboxmessages) | **GET** /profiles/{profileId}/integrations/{integration}/inbox/messages | Получить сообщения inbox профиля
+*InboxApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxConversationsAction**](docs/Api/InboxApi.md#postprofilesprofileidintegrationsintegrationinboxconversationsaction) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/conversations/action | Изменить состояние диалога inbox
+*InboxApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxConversationsAvatar**](docs/Api/InboxApi.md#postprofilesprofileidintegrationsintegrationinboxconversationsavatar) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/conversations/avatar | Обновить аватар диалога inbox
+*InboxApi* | [**postProfilesProfileIdIntegrationsIntegrationInboxRead**](docs/Api/InboxApi.md#postprofilesprofileidintegrationsintegrationinboxread) | **POST** /profiles/{profileId}/integrations/{integration}/inbox/read | Отметить диалог inbox как прочитанный
+*MessagesApi* | [**deleteProfilesProfileIdIntegrationsIntegrationMessagesReactions**](docs/Api/MessagesApi.md#deleteprofilesprofileidintegrationsintegrationmessagesreactions) | **DELETE** /profiles/{profileId}/integrations/{integration}/messages/reactions | Убрать реакцию с сообщения (MAX)
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationFilesResolve**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationfilesresolve) | **POST** /profiles/{profileId}/integrations/{integration}/files/resolve | Получить ссылки на файл по ID или токену (MAX)
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessages**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessages) | **POST** /profiles/{profileId}/integrations/{integration}/messages | Отправить сообщение
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesDelete**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesdelete) | **POST** /profiles/{profileId}/integrations/{integration}/messages/delete | Удалить сообщение
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesDraft**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesdraft) | **POST** /profiles/{profileId}/integrations/{integration}/messages/draft | Получить черновик Telegram-диалога
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesDraftSave**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesdraftsave) | **POST** /profiles/{profileId}/integrations/{integration}/messages/draft/save | Сохранить черновик Telegram-диалога
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesEdit**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesedit) | **POST** /profiles/{profileId}/integrations/{integration}/messages/edit | Изменить сообщение
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesFiles**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesfiles) | **POST** /profiles/{profileId}/integrations/{integration}/messages/files | Загрузить файл для сообщения
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesForward**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesforward) | **POST** /profiles/{profileId}/integrations/{integration}/messages/forward | Переслать сообщение
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesHistory**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessageshistory) | **POST** /profiles/{profileId}/integrations/{integration}/messages/history | Получить историю сообщений чата
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesReactions**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesreactions) | **POST** /profiles/{profileId}/integrations/{integration}/messages/reactions | Поставить реакцию на сообщение (MAX)
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesRead**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesread) | **POST** /profiles/{profileId}/integrations/{integration}/messages/read | Отметить чат как прочитанный (MAX)
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesReply**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesreply) | **POST** /profiles/{profileId}/integrations/{integration}/messages/reply | Ответить на сообщение
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesScheduled**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesscheduled) | **POST** /profiles/{profileId}/integrations/{integration}/messages/scheduled | Получить отложенные сообщения
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesScheduledDelete**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesscheduleddelete) | **POST** /profiles/{profileId}/integrations/{integration}/messages/scheduled/delete | Удалить отложенные сообщения
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesScheduledSend**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesscheduledsend) | **POST** /profiles/{profileId}/integrations/{integration}/messages/scheduled/send | Отправить отложенные сообщения сразу
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesSearch**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagessearch) | **POST** /profiles/{profileId}/integrations/{integration}/messages/search | Найти сообщения в Telegram
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesTranscription**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagestranscription) | **POST** /profiles/{profileId}/integrations/{integration}/messages/transcription | Расшифровать медиа MAX
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesTyping**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagestyping) | **POST** /profiles/{profileId}/integrations/{integration}/messages/typing | Отправить статус набора текста (MAX)
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationMessagesUnread**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationmessagesunread) | **POST** /profiles/{profileId}/integrations/{integration}/messages/unread | Пометить чат как непрочитанный (MAX)
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationPollsClose**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationpollsclose) | **POST** /profiles/{profileId}/integrations/{integration}/polls/close | Закрыть опрос MAX
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationPollsUpdates**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationpollsupdates) | **POST** /profiles/{profileId}/integrations/{integration}/polls/updates | Обновить состояние опроса MAX
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationPollsVote**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationpollsvote) | **POST** /profiles/{profileId}/integrations/{integration}/polls/vote | Проголосовать в опросе MAX
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationUploadsUrl**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationuploadsurl) | **POST** /profiles/{profileId}/integrations/{integration}/uploads/url | Получить URL загрузки MAX
+*MessagesApi* | [**postProfilesProfileIdIntegrationsIntegrationVideosResolve**](docs/Api/MessagesApi.md#postprofilesprofileidintegrationsintegrationvideosresolve) | **POST** /profiles/{profileId}/integrations/{integration}/videos/resolve | Получить ссылки на видео по ID (MAX)
+*ProfilesApi* | [**deleteProfilesProfileId**](docs/Api/ProfilesApi.md#deleteprofilesprofileid) | **DELETE** /profiles/{profileId} | Удалить профиль
+*ProfilesApi* | [**deleteProfilesProfileIdAuthShare**](docs/Api/ProfilesApi.md#deleteprofilesprofileidauthshare) | **DELETE** /profiles/{profileId}/auth-share | Отозвать ссылку
+*ProfilesApi* | [**deleteProfilesProfileIdScenariosScenarioId**](docs/Api/ProfilesApi.md#deleteprofilesprofileidscenariosscenarioid) | **DELETE** /profiles/{profileId}/scenarios/{scenarioId} | Удалить сценарий профиля
+*ProfilesApi* | [**deleteProfilesProfileIdScenariosScenarioIdPresence**](docs/Api/ProfilesApi.md#deleteprofilesprofileidscenariosscenarioidpresence) | **DELETE** /profiles/{profileId}/scenarios/{scenarioId}/presence | Выйти из редактора
+*ProfilesApi* | [**deleteProfilesProfileIdScenariosScenarioIdWebhookSecret**](docs/Api/ProfilesApi.md#deleteprofilesprofileidscenariosscenarioidwebhooksecret) | **DELETE** /profiles/{profileId}/scenarios/{scenarioId}/webhook-secret | Отозвать public webhook secret
+*ProfilesApi* | [**deleteProfilesViewsViewId**](docs/Api/ProfilesApi.md#deleteprofilesviewsviewid) | **DELETE** /profiles/views/{viewId} | Удалить вид списка профилей
+*ProfilesApi* | [**getProfiles**](docs/Api/ProfilesApi.md#getprofiles) | **GET** /profiles | Получить список профилей
+*ProfilesApi* | [**getProfilesIds**](docs/Api/ProfilesApi.md#getprofilesids) | **GET** /profiles/ids | Список profileId по фильтрам
+*ProfilesApi* | [**getProfilesProfileId**](docs/Api/ProfilesApi.md#getprofilesprofileid) | **GET** /profiles/{profileId} | Получить профиль
+*ProfilesApi* | [**getProfilesProfileIdActions**](docs/Api/ProfilesApi.md#getprofilesprofileidactions) | **GET** /profiles/{profileId}/actions | Получить журнал действий профиля
+*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationContacts**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationcontacts) | **GET** /profiles/{profileId}/integrations/{integration}/contacts | Получить контакты профиля (MAX)
+*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationContactsBlocked**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationcontactsblocked) | **GET** /profiles/{profileId}/integrations/{integration}/contacts/blocked | Получить заблокированные контакты (MAX)
+*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationOverview**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationoverview) | **GET** /profiles/{profileId}/integrations/{integration}/overview | Получить обзор профиля
+*ProfilesApi* | [**getProfilesProfileIdIntegrationsIntegrationStatus**](docs/Api/ProfilesApi.md#getprofilesprofileidintegrationsintegrationstatus) | **GET** /profiles/{profileId}/integrations/{integration}/status | Получить статус профиля
+*ProfilesApi* | [**getProfilesProfileIdQuotas**](docs/Api/ProfilesApi.md#getprofilesprofileidquotas) | **GET** /profiles/{profileId}/quotas | Квоты профиля
+*ProfilesApi* | [**getProfilesProfileIdScenarios**](docs/Api/ProfilesApi.md#getprofilesprofileidscenarios) | **GET** /profiles/{profileId}/scenarios | Получить сценарии профиля
+*ProfilesApi* | [**getProfilesProfileIdScenariosScenarioIdAnalytics**](docs/Api/ProfilesApi.md#getprofilesprofileidscenariosscenarioidanalytics) | **GET** /profiles/{profileId}/scenarios/{scenarioId}/analytics | Аналитика воронки сценария
+*ProfilesApi* | [**getProfilesProfileIdScenariosScenarioIdPresence**](docs/Api/ProfilesApi.md#getprofilesprofileidscenariosscenarioidpresence) | **GET** /profiles/{profileId}/scenarios/{scenarioId}/presence | Кто в редакторе
+*ProfilesApi* | [**getProfilesProfileIdScenariosScenarioIdRuns**](docs/Api/ProfilesApi.md#getprofilesprofileidscenariosscenarioidruns) | **GET** /profiles/{profileId}/scenarios/{scenarioId}/runs | Список запусков сценария
+*ProfilesApi* | [**getProfilesProfileIdScenariosScenarioIdRunsTraceId**](docs/Api/ProfilesApi.md#getprofilesprofileidscenariosscenarioidrunstraceid) | **GET** /profiles/{profileId}/scenarios/{scenarioId}/runs/{traceId} | Детали запуска сценария
+*ProfilesApi* | [**getProfilesViews**](docs/Api/ProfilesApi.md#getprofilesviews) | **GET** /profiles/views | Сохранённые виды списка профилей
+*ProfilesApi* | [**patchProfilesProfileId**](docs/Api/ProfilesApi.md#patchprofilesprofileid) | **PATCH** /profiles/{profileId} | Обновить профиль
+*ProfilesApi* | [**patchProfilesProfileIdIntegrationsIntegrationAccountProfile**](docs/Api/ProfilesApi.md#patchprofilesprofileidintegrationsintegrationaccountprofile) | **PATCH** /profiles/{profileId}/integrations/{integration}/account/profile | Обновить имя и описание профиля в MAX
+*ProfilesApi* | [**postProfiles**](docs/Api/ProfilesApi.md#postprofiles) | **POST** /profiles | Создать профиль
+*ProfilesApi* | [**postProfilesBulk**](docs/Api/ProfilesApi.md#postprofilesbulk) | **POST** /profiles/bulk | Массовые действия над профилями
+*ProfilesApi* | [**postProfilesProfileIdAuthShare**](docs/Api/ProfilesApi.md#postprofilesprofileidauthshare) | **POST** /profiles/{profileId}/auth-share | Ссылка на авторизацию
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationAvatar**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationavatar) | **POST** /profiles/{profileId}/integrations/{integration}/avatar | Обновить аватар профиля (MAX)
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationBotsWebAppInit**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationbotswebappinit) | **POST** /profiles/{profileId}/integrations/{integration}/bots/web-app/init | Инициализировать MAX bot web app
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationCallsByPeer**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcallsbypeer) | **POST** /profiles/{profileId}/integrations/{integration}/calls/by-peer | Получить group call Telegram по чату
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationCallsGet**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcallsget) | **POST** /profiles/{profileId}/integrations/{integration}/calls/get | Получить состояние Telegram group call
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationCallsJoin**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcallsjoin) | **POST** /profiles/{profileId}/integrations/{integration}/calls/join | Присоединиться к Telegram group call
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationCallsLeave**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcallsleave) | **POST** /profiles/{profileId}/integrations/{integration}/calls/leave | Покинуть Telegram group call
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsAdd**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactsadd) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/add | Добавить контакт в MAX
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsByIds**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactsbyids) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/by-ids | Получить контакты по ID (MAX)
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsCheck**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactscheck) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/check | Проверить, существует ли контакт
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsLastOnline**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactslastonline) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/last-online | Получить время последней активности контактов (MAX)
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationContactsSearch**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationcontactssearch) | **POST** /profiles/{profileId}/integrations/{integration}/contacts/search | Найти контакт по телефону или username
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationForumsToggle**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationforumstoggle) | **POST** /profiles/{profileId}/integrations/{integration}/forums/toggle | Изменить режим форума в Telegram
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationReboot**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationreboot) | **POST** /profiles/{profileId}/integrations/{integration}/reboot | Перезапустить профиль (MAX)
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationStories**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationstories) | **POST** /profiles/{profileId}/integrations/{integration}/stories | Получить активные Telegram stories
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationStoriesPeer**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationstoriespeer) | **POST** /profiles/{profileId}/integrations/{integration}/stories/peer | Получить stories конкретного Telegram peer
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationStoriesReaction**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationstoriesreaction) | **POST** /profiles/{profileId}/integrations/{integration}/stories/reaction | Поставить реакцию на Telegram story
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationStoriesRead**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationstoriesread) | **POST** /profiles/{profileId}/integrations/{integration}/stories/read | Отметить Telegram stories как просмотренные
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationStoriesSend**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationstoriessend) | **POST** /profiles/{profileId}/integrations/{integration}/stories/send | Опубликовать Telegram story
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationTopics**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationtopics) | **POST** /profiles/{profileId}/integrations/{integration}/topics | Получить список Telegram forum topics
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationTopicsCreate**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationtopicscreate) | **POST** /profiles/{profileId}/integrations/{integration}/topics/create | Создать Telegram forum topic
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationTopicsDelete**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationtopicsdelete) | **POST** /profiles/{profileId}/integrations/{integration}/topics/delete | Удалить историю Telegram forum topic
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationTopicsEdit**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationtopicsedit) | **POST** /profiles/{profileId}/integrations/{integration}/topics/edit | Изменить Telegram forum topic
+*ProfilesApi* | [**postProfilesProfileIdIntegrationsIntegrationTopicsReorder**](docs/Api/ProfilesApi.md#postprofilesprofileidintegrationsintegrationtopicsreorder) | **POST** /profiles/{profileId}/integrations/{integration}/topics/reorder | Переупорядочить закрепленные Telegram forum topics
+*ProfilesApi* | [**postProfilesProfileIdRenew**](docs/Api/ProfilesApi.md#postprofilesprofileidrenew) | **POST** /profiles/{profileId}/renew | Продлить профиль
+*ProfilesApi* | [**postProfilesProfileIdScenariosAiDraft**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariosaidraft) | **POST** /profiles/{profileId}/scenarios/ai-draft | AI-черновик сценария
+*ProfilesApi* | [**postProfilesProfileIdScenariosScenarioIdPublish**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariosscenarioidpublish) | **POST** /profiles/{profileId}/scenarios/{scenarioId}/publish | Опубликовать черновик сценария
+*ProfilesApi* | [**postProfilesProfileIdScenariosScenarioIdRollback**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariosscenarioidrollback) | **POST** /profiles/{profileId}/scenarios/{scenarioId}/rollback | Откатить черновик к published
+*ProfilesApi* | [**postProfilesProfileIdScenariosScenarioIdRunsTraceIdEvents**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariosscenarioidrunstraceidevents) | **POST** /profiles/{profileId}/scenarios/{scenarioId}/runs/{traceId}/events | Возобновить ожидающий сценарий
+*ProfilesApi* | [**postProfilesProfileIdScenariosScenarioIdWebhook**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariosscenarioidwebhook) | **POST** /profiles/{profileId}/scenarios/{scenarioId}/webhook | Запустить сценарий вебхуком
+*ProfilesApi* | [**postProfilesProfileIdScenariosScenarioIdWebhookSecret**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariosscenarioidwebhooksecret) | **POST** /profiles/{profileId}/scenarios/{scenarioId}/webhook-secret | Выпустить public webhook secret
+*ProfilesApi* | [**postProfilesProfileIdScenariosSimulate**](docs/Api/ProfilesApi.md#postprofilesprofileidscenariossimulate) | **POST** /profiles/{profileId}/scenarios/simulate | Симулировать сценарий
+*ProfilesApi* | [**postProfilesViews**](docs/Api/ProfilesApi.md#postprofilesviews) | **POST** /profiles/views | Создать вид списка профилей
+*ProfilesApi* | [**putProfilesProfileIdAutoRenew**](docs/Api/ProfilesApi.md#putprofilesprofileidautorenew) | **PUT** /profiles/{profileId}/auto-renew | Обновить автопродление профиля
+*ProfilesApi* | [**putProfilesProfileIdScenarios**](docs/Api/ProfilesApi.md#putprofilesprofileidscenarios) | **PUT** /profiles/{profileId}/scenarios | Создать или обновить сценарий профиля
+*ProfilesApi* | [**putProfilesProfileIdScenariosScenarioIdPresence**](docs/Api/ProfilesApi.md#putprofilesprofileidscenariosscenarioidpresence) | **PUT** /profiles/{profileId}/scenarios/{scenarioId}/presence | Присутствие в редакторе
+*SessionsApi* | [**deleteProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/SessionsApi.md#deleteprofilesprofileidintegrationsintegrationsession) | **DELETE** /profiles/{profileId}/integrations/{integration}/session | Очистить текущую сессию
+*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationDevices**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationdevices) | **GET** /profiles/{profileId}/integrations/{integration}/devices | Получить активные устройства (MAX)
+*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationsession) | **GET** /profiles/{profileId}/integrations/{integration}/session | Получить данные текущей сессии
+*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationSessionChats**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationsessionchats) | **GET** /profiles/{profileId}/integrations/{integration}/session/chats | Получить чаты текущей сессии
+*SessionsApi* | [**getProfilesProfileIdIntegrationsIntegrationSessions**](docs/Api/SessionsApi.md#getprofilesprofileidintegrationsintegrationsessions) | **GET** /profiles/{profileId}/integrations/{integration}/sessions | Получить активные сессии (MAX)
+*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionEvents**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionevents) | **POST** /profiles/{profileId}/integrations/{integration}/session/events | Получить события текущей сессии
+*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionStart**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionstart) | **POST** /profiles/{profileId}/integrations/{integration}/session/start | Запустить интеграционную сессию
+*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionStop**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionstop) | **POST** /profiles/{profileId}/integrations/{integration}/session/stop | Остановить интеграционную сессию
+*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSessionsClose**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsessionsclose) | **POST** /profiles/{profileId}/integrations/{integration}/sessions/close | Завершить остальные MAX-сессии
+*SessionsApi* | [**postProfilesProfileIdIntegrationsIntegrationSync**](docs/Api/SessionsApi.md#postprofilesprofileidintegrationsintegrationsync) | **POST** /profiles/{profileId}/integrations/{integration}/sync | Синхронизировать профиль с интеграцией
+*SessionsApi* | [**putProfilesProfileIdIntegrationsIntegrationSession**](docs/Api/SessionsApi.md#putprofilesprofileidintegrationsintegrationsession) | **PUT** /profiles/{profileId}/integrations/{integration}/session | Сохранить данные текущей сессии
+*SettingsApi* | [**getProfilesProfileIdIntegrationsIntegrationSettingsUser**](docs/Api/SettingsApi.md#getprofilesprofileidintegrationsintegrationsettingsuser) | **GET** /profiles/{profileId}/integrations/{integration}/settings/user | Получить настройки аккаунта (MAX)
+*SettingsApi* | [**patchProfilesProfileIdIntegrationsIntegrationSettingsUser**](docs/Api/SettingsApi.md#patchprofilesprofileidintegrationsintegrationsettingsuser) | **PATCH** /profiles/{profileId}/integrations/{integration}/settings/user | Обновить настройки аккаунта (MAX)
+*WebhooksApi* | [**deleteProfilesProfileIdIntegrationsIntegrationWebhook**](docs/Api/WebhooksApi.md#deleteprofilesprofileidintegrationsintegrationwebhook) | **DELETE** /profiles/{profileId}/integrations/{integration}/webhook | Отключить входящий webhook интеграции
+*WebhooksApi* | [**deleteProfilesProfileIdIntegrationsIntegrationWebhooksId**](docs/Api/WebhooksApi.md#deleteprofilesprofileidintegrationsintegrationwebhooksid) | **DELETE** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Удалить вебхук
+*WebhooksApi* | [**getProfilesProfileIdIntegrationsIntegrationWebhook**](docs/Api/WebhooksApi.md#getprofilesprofileidintegrationsintegrationwebhook) | **GET** /profiles/{profileId}/integrations/{integration}/webhook | Получить входящий webhook интеграции
+*WebhooksApi* | [**getProfilesProfileIdIntegrationsIntegrationWebhooks**](docs/Api/WebhooksApi.md#getprofilesprofileidintegrationsintegrationwebhooks) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks | Получить список вебхуков
+*WebhooksApi* | [**getProfilesProfileIdIntegrationsIntegrationWebhooksDlq**](docs/Api/WebhooksApi.md#getprofilesprofileidintegrationsintegrationwebhooksdlq) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/dlq | Получить сообщения DLQ вебхуков
+*WebhooksApi* | [**getProfilesProfileIdIntegrationsIntegrationWebhooksEvents**](docs/Api/WebhooksApi.md#getprofilesprofileidintegrationsintegrationwebhooksevents) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/events | Получить каталог событий вебхуков
+*WebhooksApi* | [**getProfilesProfileIdIntegrationsIntegrationWebhooksId**](docs/Api/WebhooksApi.md#getprofilesprofileidintegrationsintegrationwebhooksid) | **GET** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Получить вебхук
+*WebhooksApi* | [**patchProfilesProfileIdIntegrationsIntegrationWebhooksId**](docs/Api/WebhooksApi.md#patchprofilesprofileidintegrationsintegrationwebhooksid) | **PATCH** /profiles/{profileId}/integrations/{integration}/webhooks/{id} | Обновить вебхук
+*WebhooksApi* | [**postProfilesProfileIdIntegrationsIntegrationWebhookSubscribe**](docs/Api/WebhooksApi.md#postprofilesprofileidintegrationsintegrationwebhooksubscribe) | **POST** /profiles/{profileId}/integrations/{integration}/webhook/subscribe | Подписать входящий webhook интеграции
+*WebhooksApi* | [**postProfilesProfileIdIntegrationsIntegrationWebhookUnsubscribe**](docs/Api/WebhooksApi.md#postprofilesprofileidintegrationsintegrationwebhookunsubscribe) | **POST** /profiles/{profileId}/integrations/{integration}/webhook/unsubscribe | Отключить входящий webhook интеграции
+*WebhooksApi* | [**postProfilesProfileIdIntegrationsIntegrationWebhooks**](docs/Api/WebhooksApi.md#postprofilesprofileidintegrationsintegrationwebhooks) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks | Создать вебхук
+*WebhooksApi* | [**postProfilesProfileIdIntegrationsIntegrationWebhooksCheck**](docs/Api/WebhooksApi.md#postprofilesprofileidintegrationsintegrationwebhookscheck) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/check | Проверить адрес вебхука
+*WebhooksApi* | [**postProfilesProfileIdIntegrationsIntegrationWebhooksDlqRedrive**](docs/Api/WebhooksApi.md#postprofilesprofileidintegrationsintegrationwebhooksdlqredrive) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/dlq/redrive | Повторно отправить сообщения из DLQ
+*WebhooksApi* | [**postProfilesProfileIdIntegrationsIntegrationWebhooksIdTest**](docs/Api/WebhooksApi.md#postprofilesprofileidintegrationsintegrationwebhooksidtest) | **POST** /profiles/{profileId}/integrations/{integration}/webhooks/{id}/test | Отправить тестовый вебхук
 
 ## Models
 
-- [AccountModuleItem](docs/Model/AccountModuleItem.md)
-- [AccountModuleUsageItem](docs/Model/AccountModuleUsageItem.md)
-- [AccountModulesListResponseBody](docs/Model/AccountModulesListResponseBody.md)
-- [AccountModulesUsageResponseBody](docs/Model/AccountModulesUsageResponseBody.md)
-- [AccountSettings](docs/Model/AccountSettings.md)
-- [ApiScopeInfo](docs/Model/ApiScopeInfo.md)
-- [ApiScopesListResponseBody](docs/Model/ApiScopesListResponseBody.md)
-- [ApiTokenItem](docs/Model/ApiTokenItem.md)
-- [ApiTokensListResponseBody](docs/Model/ApiTokensListResponseBody.md)
-- [AuthTokenInputBody](docs/Model/AuthTokenInputBody.md)
-- [AuthTokenOutputBody](docs/Model/AuthTokenOutputBody.md)
+- [AppliedPromotionSummary](docs/Model/AppliedPromotionSummary.md)
 - [AuthorizationResultData](docs/Model/AuthorizationResultData.md)
-- [BackupPayload](docs/Model/BackupPayload.md)
-- [BackupProfile](docs/Model/BackupProfile.md)
-- [BackupProfileAuth](docs/Model/BackupProfileAuth.md)
-- [BackupUser](docs/Model/BackupUser.md)
-- [BackupWebhook](docs/Model/BackupWebhook.md)
+- [BillingInvoiceItem](docs/Model/BillingInvoiceItem.md)
 - [BotTokenInputBody](docs/Model/BotTokenInputBody.md)
 - [BotTokenResponseBody](docs/Model/BotTokenResponseBody.md)
 - [BotTokenSetResponseBody](docs/Model/BotTokenSetResponseBody.md)
-- [ChangePasswordInputBody](docs/Model/ChangePasswordInputBody.md)
-- [ChangePasswordResponseBody](docs/Model/ChangePasswordResponseBody.md)
 - [ChatHistoryInputBody](docs/Model/ChatHistoryInputBody.md)
+- [Company](docs/Model/Company.md)
+- [CompanyLookupOutputBody](docs/Model/CompanyLookupOutputBody.md)
+- [ContactCheckInputBody](docs/Model/ContactCheckInputBody.md)
+- [ContactCheckResponseBody](docs/Model/ContactCheckResponseBody.md)
 - [ContactsListHumaBody](docs/Model/ContactsListHumaBody.md)
 - [ConversationActionInputBody](docs/Model/ConversationActionInputBody.md)
 - [ConversationActionResponseBody](docs/Model/ConversationActionResponseBody.md)
@@ -328,21 +311,17 @@ Class | Method | HTTP request | Description
 - [ConversationAvatarMeta](docs/Model/ConversationAvatarMeta.md)
 - [ConversationAvatarResponseBody](docs/Model/ConversationAvatarResponseBody.md)
 - [ConversationMeta](docs/Model/ConversationMeta.md)
-- [CreateApiTokenInputBody](docs/Model/CreateApiTokenInputBody.md)
+- [CreateAuthShareBody](docs/Model/CreateAuthShareBody.md)
+- [CreateAuthShareResponse](docs/Model/CreateAuthShareResponse.md)
+- [CreateBillingInvoiceInputBody](docs/Model/CreateBillingInvoiceInputBody.md)
 - [CreateProfileInputBody](docs/Model/CreateProfileInputBody.md)
-- [CreateUserInputBody](docs/Model/CreateUserInputBody.md)
-- [CreateUserResponseBody](docs/Model/CreateUserResponseBody.md)
-- [DashboardKPI](docs/Model/DashboardKPI.md)
-- [DashboardMessagePoint](docs/Model/DashboardMessagePoint.md)
-- [DashboardMessages30d](docs/Model/DashboardMessages30d.md)
-- [DashboardSetup](docs/Model/DashboardSetup.md)
 - [DeleteMessageBody](docs/Model/DeleteMessageBody.md)
 - [DeleteMessageInputBody](docs/Model/DeleteMessageInputBody.md)
+- [DeleteProfilesProfileIdAuthShareResponse](docs/Model/DeleteProfilesProfileIdAuthShareResponse.md)
 - [EditMessageInputBody](docs/Model/EditMessageInputBody.md)
-- [EmailVerifyConfirmInputBody](docs/Model/EmailVerifyConfirmInputBody.md)
-- [EmailVerifyConfirmResponseBody](docs/Model/EmailVerifyConfirmResponseBody.md)
-- [EmailVerifyRequestInputBody](docs/Model/EmailVerifyRequestInputBody.md)
-- [EmailVerifyRequestResponseBody](docs/Model/EmailVerifyRequestResponseBody.md)
+- [EmailSMTPConfigResponseBody](docs/Model/EmailSMTPConfigResponseBody.md)
+- [EmailSMTPSetInputBody](docs/Model/EmailSMTPSetInputBody.md)
+- [EmailSMTPSetResponseBody](docs/Model/EmailSMTPSetResponseBody.md)
 - [ErrorDetail](docs/Model/ErrorDetail.md)
 - [ErrorModel](docs/Model/ErrorModel.md)
 - [ForwardMessageInputBody](docs/Model/ForwardMessageInputBody.md)
@@ -352,67 +331,111 @@ Class | Method | HTTP request | Description
 - [InboxMessagesListResponseBody](docs/Model/InboxMessagesListResponseBody.md)
 - [InboxReadInputBody](docs/Model/InboxReadInputBody.md)
 - [InboxReadResponseBody](docs/Model/InboxReadResponseBody.md)
+- [Item](docs/Model/Item.md)
+- [LegalProfileBody](docs/Model/LegalProfileBody.md)
+- [ListBillingInvoicesOutputBody](docs/Model/ListBillingInvoicesOutputBody.md)
 - [LogoutBody](docs/Model/LogoutBody.md)
-- [MarkReadInputBody](docs/Model/MarkReadInputBody.md)
 - [MaxBlockedContactsResponseBody](docs/Model/MaxBlockedContactsResponseBody.md)
+- [MaxChannelInviteInputBody](docs/Model/MaxChannelInviteInputBody.md)
+- [MaxChannelInviteResponseBody](docs/Model/MaxChannelInviteResponseBody.md)
+- [MaxChatMembersInputBody](docs/Model/MaxChatMembersInputBody.md)
+- [MaxChatMembersResponseBody](docs/Model/MaxChatMembersResponseBody.md)
 - [MaxChatSubscriptionInputBody](docs/Model/MaxChatSubscriptionInputBody.md)
 - [MaxChatSubscriptionResponseBody](docs/Model/MaxChatSubscriptionResponseBody.md)
+- [MaxChatUpdateInputBody](docs/Model/MaxChatUpdateInputBody.md)
+- [MaxChatUpdateResponseBody](docs/Model/MaxChatUpdateResponseBody.md)
 - [MaxChatsByIDsInputBody](docs/Model/MaxChatsByIDsInputBody.md)
 - [MaxChatsByIDsResponseBody](docs/Model/MaxChatsByIDsResponseBody.md)
+- [MaxChatsListInputBody](docs/Model/MaxChatsListInputBody.md)
+- [MaxChatsListResponseBody](docs/Model/MaxChatsListResponseBody.md)
+- [MaxCloseSessionsResponseBody](docs/Model/MaxCloseSessionsResponseBody.md)
 - [MaxContact](docs/Model/MaxContact.md)
+- [MaxContactAddInputBody](docs/Model/MaxContactAddInputBody.md)
+- [MaxContactAddResponseBody](docs/Model/MaxContactAddResponseBody.md)
 - [MaxContactName](docs/Model/MaxContactName.md)
 - [MaxContactsByIDsInputBody](docs/Model/MaxContactsByIDsInputBody.md)
 - [MaxContactsByIDsResponseBody](docs/Model/MaxContactsByIDsResponseBody.md)
 - [MaxContactsLastOnlineInputBody](docs/Model/MaxContactsLastOnlineInputBody.md)
 - [MaxContactsLastOnlineResponseBody](docs/Model/MaxContactsLastOnlineResponseBody.md)
 - [MaxCreateFolderInputBody](docs/Model/MaxCreateFolderInputBody.md)
+- [MaxFileResolveInputBody](docs/Model/MaxFileResolveInputBody.md)
+- [MaxFileResolveResponseBody](docs/Model/MaxFileResolveResponseBody.md)
 - [MaxFolder](docs/Model/MaxFolder.md)
 - [MaxFoldersResponseBody](docs/Model/MaxFoldersResponseBody.md)
+- [MaxGenericActionResponseBody](docs/Model/MaxGenericActionResponseBody.md)
+- [MaxLinkInfoInputBody](docs/Model/MaxLinkInfoInputBody.md)
+- [MaxLinkInfoResponseBody](docs/Model/MaxLinkInfoResponseBody.md)
+- [MaxMessageTranscriptionInputBody](docs/Model/MaxMessageTranscriptionInputBody.md)
+- [MaxMessageTranscriptionResponseBody](docs/Model/MaxMessageTranscriptionResponseBody.md)
+- [MaxPollCloseInputBody](docs/Model/MaxPollCloseInputBody.md)
+- [MaxPollUpdateInputBody](docs/Model/MaxPollUpdateInputBody.md)
+- [MaxPollVoteInputBody](docs/Model/MaxPollVoteInputBody.md)
 - [MaxProfile](docs/Model/MaxProfile.md)
 - [MaxReorderFoldersInputBody](docs/Model/MaxReorderFoldersInputBody.md)
+- [MaxResolveChatByPhoneInputBody](docs/Model/MaxResolveChatByPhoneInputBody.md)
+- [MaxResolveChatByPhoneResponseBody](docs/Model/MaxResolveChatByPhoneResponseBody.md)
 - [MaxSession](docs/Model/MaxSession.md)
 - [MaxSessionsResponseBody](docs/Model/MaxSessionsResponseBody.md)
 - [MaxSetProfileInputBody](docs/Model/MaxSetProfileInputBody.md)
 - [MaxSetProfileResponseBody](docs/Model/MaxSetProfileResponseBody.md)
 - [MaxSetUserSettingsInputBody](docs/Model/MaxSetUserSettingsInputBody.md)
+- [MaxUploadURLInputBody](docs/Model/MaxUploadURLInputBody.md)
+- [MaxUploadURLResponseBody](docs/Model/MaxUploadURLResponseBody.md)
 - [MaxUserSettingsPatch](docs/Model/MaxUserSettingsPatch.md)
 - [MaxUserSettingsResponseBody](docs/Model/MaxUserSettingsResponseBody.md)
 - [MaxUserSettingsState](docs/Model/MaxUserSettingsState.md)
 - [MaxVideoResolveInputBody](docs/Model/MaxVideoResolveInputBody.md)
 - [MaxVideoResolveResponseBody](docs/Model/MaxVideoResolveResponseBody.md)
-- [MaxWSCallInputBody](docs/Model/MaxWSCallInputBody.md)
-- [MaxWSCallResponseBody](docs/Model/MaxWSCallResponseBody.md)
+- [MaxWebAppInitInputBody](docs/Model/MaxWebAppInitInputBody.md)
+- [MaxWebAppInitResponseBody](docs/Model/MaxWebAppInitResponseBody.md)
 - [MessageResponseBody](docs/Model/MessageResponseBody.md)
-- [NotificationItem](docs/Model/NotificationItem.md)
-- [NotificationsListResponseBody](docs/Model/NotificationsListResponseBody.md)
-- [OAuthPendingCompleteEmailInputBody](docs/Model/OAuthPendingCompleteEmailInputBody.md)
-- [OAuthProviderInfo](docs/Model/OAuthProviderInfo.md)
-- [OAuthProvidersOutputBody](docs/Model/OAuthProvidersOutputBody.md)
-- [OAuthResolveOutputBody](docs/Model/OAuthResolveOutputBody.md)
-- [OAuthStartOutputBody](docs/Model/OAuthStartOutputBody.md)
 - [Password2FAInputBody](docs/Model/Password2FAInputBody.md)
 - [PhoneAuthCodeInputBody](docs/Model/PhoneAuthCodeInputBody.md)
 - [PhoneAuthCodeResponseBody](docs/Model/PhoneAuthCodeResponseBody.md)
+- [PhoneAuthConfirmInputBody](docs/Model/PhoneAuthConfirmInputBody.md)
+- [PhoneAuthConfirmResponseBody](docs/Model/PhoneAuthConfirmResponseBody.md)
 - [PhoneAuthPasswordInputBody](docs/Model/PhoneAuthPasswordInputBody.md)
 - [PhoneAuthPasswordResponseBody](docs/Model/PhoneAuthPasswordResponseBody.md)
 - [PhoneAuthStartInputBody](docs/Model/PhoneAuthStartInputBody.md)
 - [PhoneAuthStartResponseBody](docs/Model/PhoneAuthStartResponseBody.md)
+- [Poll](docs/Model/Poll.md)
 - [PollAuthorizationBody](docs/Model/PollAuthorizationBody.md)
 - [PollAuthorizationInputBody](docs/Model/PollAuthorizationInputBody.md)
 - [ProfileActionItem](docs/Model/ProfileActionItem.md)
 - [ProfileActionsListResponseBody](docs/Model/ProfileActionsListResponseBody.md)
+- [ProfileListViewBody](docs/Model/ProfileListViewBody.md)
+- [ProfileListViewCreateInputBody](docs/Model/ProfileListViewCreateInputBody.md)
+- [ProfileListViewDeleteResponseBody](docs/Model/ProfileListViewDeleteResponseBody.md)
+- [ProfileListViewsResponseBody](docs/Model/ProfileListViewsResponseBody.md)
+- [ProfileOverviewBody](docs/Model/ProfileOverviewBody.md)
+- [ProfileReadinessBody](docs/Model/ProfileReadinessBody.md)
+- [ProfileReadinessChecksBody](docs/Model/ProfileReadinessChecksBody.md)
 - [ProfileRenewOutputBody](docs/Model/ProfileRenewOutputBody.md)
 - [ProfileResponse](docs/Model/ProfileResponse.md)
+- [ProfilesBulkInputBody](docs/Model/ProfilesBulkInputBody.md)
+- [ProfilesBulkItemError](docs/Model/ProfilesBulkItemError.md)
+- [ProfilesBulkItemResult](docs/Model/ProfilesBulkItemResult.md)
+- [ProfilesBulkMatchFilter](docs/Model/ProfilesBulkMatchFilter.md)
+- [ProfilesBulkOutputBody](docs/Model/ProfilesBulkOutputBody.md)
+- [ProfilesIDsResponseBody](docs/Model/ProfilesIDsResponseBody.md)
 - [ProfilesListResponseBody](docs/Model/ProfilesListResponseBody.md)
+- [ProfilesListSummaryBody](docs/Model/ProfilesListSummaryBody.md)
+- [ProfilesListSummaryBodyExpiringWithinDaysStruct](docs/Model/ProfilesListSummaryBodyExpiringWithinDaysStruct.md)
+- [ProfilesListSummaryBodyOwnershipStruct](docs/Model/ProfilesListSummaryBodyOwnershipStruct.md)
+- [ProfilesListSummaryBodyReadinessStruct](docs/Model/ProfilesListSummaryBodyReadinessStruct.md)
+- [ProfilesListSummaryBodySubscriptionStruct](docs/Model/ProfilesListSummaryBodySubscriptionStruct.md)
 - [QRStatusResponseBody](docs/Model/QRStatusResponseBody.md)
+- [QuotaResponse](docs/Model/QuotaResponse.md)
+- [QuotasListResponseBody](docs/Model/QuotasListResponseBody.md)
 - [ReactionRef](docs/Model/ReactionRef.md)
 - [ReactionStruct](docs/Model/ReactionStruct.md)
 - [ReadChatBody](docs/Model/ReadChatBody.md)
 - [ReadChatHumaInputBody](docs/Model/ReadChatHumaInputBody.md)
 - [RebootProfileBody](docs/Model/RebootProfileBody.md)
+- [RefreshBillingInvoiceOutputBody](docs/Model/RefreshBillingInvoiceOutputBody.md)
 - [RemoveReactionBody](docs/Model/RemoveReactionBody.md)
 - [RemoveReactionHumaInputBody](docs/Model/RemoveReactionHumaInputBody.md)
-- [RestoreDataInputBody](docs/Model/RestoreDataInputBody.md)
+- [RenewProfileInputBody](docs/Model/RenewProfileInputBody.md)
 - [SearchContactInputBody](docs/Model/SearchContactInputBody.md)
 - [SearchContactResponseBody](docs/Model/SearchContactResponseBody.md)
 - [SendAuthorizationCodeBody](docs/Model/SendAuthorizationCodeBody.md)
@@ -429,24 +452,15 @@ Class | Method | HTTP request | Description
 - [SessionDataInputBody](docs/Model/SessionDataInputBody.md)
 - [SessionEventsResponseBody](docs/Model/SessionEventsResponseBody.md)
 - [SessionGetResponseBody](docs/Model/SessionGetResponseBody.md)
-- [SessionItem](docs/Model/SessionItem.md)
 - [SessionSetResponseBody](docs/Model/SessionSetResponseBody.md)
 - [SessionStartInputBody](docs/Model/SessionStartInputBody.md)
 - [SessionStartResponseBody](docs/Model/SessionStartResponseBody.md)
 - [SessionStopResponseBody](docs/Model/SessionStopResponseBody.md)
-- [SessionsListResponseBody](docs/Model/SessionsListResponseBody.md)
-- [SetSettingsBody](docs/Model/SetSettingsBody.md)
-- [SetSettingsInputBody](docs/Model/SetSettingsInputBody.md)
 - [StartAuthorizationBody](docs/Model/StartAuthorizationBody.md)
 - [StartAuthorizationInputBody](docs/Model/StartAuthorizationInputBody.md)
 - [StateProfileBody](docs/Model/StateProfileBody.md)
-- [StatusResponseBody](docs/Model/StatusResponseBody.md)
 - [SyncProfileInputBody](docs/Model/SyncProfileInputBody.md)
 - [SyncProfileResponseBody](docs/Model/SyncProfileResponseBody.md)
-- [TelegramPhoneVerifyConfirmInputBody](docs/Model/TelegramPhoneVerifyConfirmInputBody.md)
-- [TelegramPhoneVerifyConfirmResponseBody](docs/Model/TelegramPhoneVerifyConfirmResponseBody.md)
-- [TelegramPhoneVerifyStartInputBody](docs/Model/TelegramPhoneVerifyStartInputBody.md)
-- [TelegramPhoneVerifyStartResponseBody](docs/Model/TelegramPhoneVerifyStartResponseBody.md)
 - [TopUpInputBody](docs/Model/TopUpInputBody.md)
 - [TopUpResponseBody](docs/Model/TopUpResponseBody.md)
 - [TopUpStatusResponseBody](docs/Model/TopUpStatusResponseBody.md)
@@ -454,30 +468,10 @@ Class | Method | HTTP request | Description
 - [TopUpsListResponseBody](docs/Model/TopUpsListResponseBody.md)
 - [TransactionItem](docs/Model/TransactionItem.md)
 - [TransactionsListResponseBody](docs/Model/TransactionsListResponseBody.md)
-- [UnreadCountResponseBody](docs/Model/UnreadCountResponseBody.md)
-- [UpdateAccountModuleInputBody](docs/Model/UpdateAccountModuleInputBody.md)
-- [UpdateAccountModuleResponseBody](docs/Model/UpdateAccountModuleResponseBody.md)
 - [UpdateProfileAutoRenewInputBody](docs/Model/UpdateProfileAutoRenewInputBody.md)
 - [UpdateProfileInputBody](docs/Model/UpdateProfileInputBody.md)
-- [UserDashboardSummaryResponseBody](docs/Model/UserDashboardSummaryResponseBody.md)
-- [UserExistsResponseBody](docs/Model/UserExistsResponseBody.md)
-- [UserInboxAvailableProfile](docs/Model/UserInboxAvailableProfile.md)
-- [UserInboxConversationActionInputBody](docs/Model/UserInboxConversationActionInputBody.md)
-- [UserInboxConversationActionResponseBody](docs/Model/UserInboxConversationActionResponseBody.md)
-- [UserInboxConversationAvatarInputBody](docs/Model/UserInboxConversationAvatarInputBody.md)
-- [UserInboxConversationAvatarResponseBody](docs/Model/UserInboxConversationAvatarResponseBody.md)
-- [UserInboxConversationItem](docs/Model/UserInboxConversationItem.md)
-- [UserInboxConversationMeta](docs/Model/UserInboxConversationMeta.md)
-- [UserInboxConversationTitleInputBody](docs/Model/UserInboxConversationTitleInputBody.md)
-- [UserInboxConversationTitleResponseBody](docs/Model/UserInboxConversationTitleResponseBody.md)
-- [UserInboxConversationsListResponseBody](docs/Model/UserInboxConversationsListResponseBody.md)
-- [UserInboxMessageItem](docs/Model/UserInboxMessageItem.md)
-- [UserInboxMessagesListResponseBody](docs/Model/UserInboxMessagesListResponseBody.md)
-- [UserInboxReadInputBody](docs/Model/UserInboxReadInputBody.md)
-- [UserInboxReadResponseBody](docs/Model/UserInboxReadResponseBody.md)
-- [UserInboxSendInputBody](docs/Model/UserInboxSendInputBody.md)
-- [UserInboxSendResponseBody](docs/Model/UserInboxSendResponseBody.md)
-- [UserMeResponseBody](docs/Model/UserMeResponseBody.md)
+- [WABAMessageTemplateItem](docs/Model/WABAMessageTemplateItem.md)
+- [WABAMessageTemplatesResponseBody](docs/Model/WABAMessageTemplatesResponseBody.md)
 
 ## Authorization
 
@@ -488,10 +482,6 @@ Authentication schemes defined for the API:
 - **API key parameter name**: X-Profile-Token
 - **Location**: HTTP header
 
-
-### BearerAuth
-
-- **Type**: Bearer authentication (JWT)
 
 ## Tests
 
@@ -510,6 +500,6 @@ vendor/bin/phpunit
 
 This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `(devel)`
+- API version: `devel`
     - Generator version: `7.20.0`
 - Build package: `org.openapitools.codegen.languages.PhpClientCodegen`

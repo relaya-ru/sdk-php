@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**folders_order** | **string[]** |  |
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**folders_order** | **string[]** | Порядок папок после пользовательской сортировки. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

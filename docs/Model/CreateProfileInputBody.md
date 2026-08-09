@@ -4,9 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**integration_type** | **string** | Integration type (max, maxbot, telegrambot, telegram, vk, whatsapp) |
-**name** | **string** | Profile name (optional) | [optional]
-**plan_tier** | **string** | Plan tier (paid, free) | [optional]
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**integration_type** | **string** | Тип интеграции профиля. |
+**name** | **string** | Человекочитаемое имя сущности. | [optional]
+**plan_tier** | **string** | Уровень тарифа или плана. | [optional]
+**promo_code** | **string** | Промокод, который применяется к оплате или тарифу. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

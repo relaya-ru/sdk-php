@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**meta** | [**\Relaya\\Sdk\Model\ConversationAvatarMeta**](ConversationAvatarMeta.md) |  |
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**meta** | [**\Relaya\Sdk\Model\ConversationAvatarMeta**](ConversationAvatarMeta.md) | Дополнительные метаданные без фиксированной схемы. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

@@ -1,6 +1,6 @@
 {
     "name": "relaya/sdk-php",
-    "description": "Relaya MAX API PHP SDK",
+    "description": "Релая MAX API PHP SDK",
     "keywords": [
         "relaya",
         "sdk",
@@ -14,7 +14,7 @@
     "license": "proprietary",
     "authors": [
         {
-            "name": "Relaya",
+            "name": "Релая",
             "homepage": "https://relaya.ru"
         }
     ],
@@ -32,19 +32,20 @@
     },
     "autoload": {
         "psr-4": {
-            "Relaya\\\\Sdk\\": "lib/"
+            "Relaya\\Sdk\\": "lib/",
+            "Relaya\\": "lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Relaya\\\\Sdk\\Test\\": "test/"
+            "Relaya\\Sdk\\Test\\": "test/"
         }
     },
     "type": "library",
     "extra": {
         "laravel": {
             "providers": [
-                "Relaya\\\\Sdk\\\\Laravel\\\\RelayaSdkServiceProvider"
+                "Relaya\\Sdk\\Laravel\\RelayaSdkServiceProvider"
             ]
         }
     },

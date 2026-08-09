@@ -1,256 +1,41 @@
-# Relaya\\Sdk\AuthApi
+# Relaya\Sdk\AuthApi
 
+Вход, OAuth, восстановление доступа.
 
-
-All URIs are relative to https://api.relaya.ru/v1, except if the operation defines another base path.
+All URIs are relative to https://localhost:8485/v1, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**authOauthProviderCallbackGet()**](AuthApi.md#authOauthProviderCallbackGet) | **GET** /auth/oauth/{provider}/callback | OAuth callback |
-| [**authOauthTelegramCompletePost()**](AuthApi.md#authOauthTelegramCompletePost) | **POST** /auth/oauth/telegram/complete | OAuth Telegram complete |
-| [**getAuthOauthProviderStart()**](AuthApi.md#getAuthOauthProviderStart) | **GET** /auth/oauth/{provider}/start | Start OAuth authorization |
-| [**getAuthOauthProviders()**](AuthApi.md#getAuthOauthProviders) | **GET** /auth/oauth/providers | Get OAuth providers availability |
-| [**getProfilesProfileIdIntegrationsIntegrationAuthQr()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationAuthQr) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr | Get auth QR |
-| [**getProfilesProfileIdIntegrationsIntegrationAuthQrStatus()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationAuthQrStatus) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr/status | Get QR auth status |
-| [**getProfilesProfileIdIntegrationsIntegrationToken()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationToken) | **GET** /profiles/{profileId}/integrations/{integration}/token | Get bot token |
-| [**getUsersExists()**](AuthApi.md#getUsersExists) | **GET** /users/exists | Check if user exists |
-| [**postAuthEmailVerifyConfirm()**](AuthApi.md#postAuthEmailVerifyConfirm) | **POST** /auth/email/verify/confirm | Confirm email verification |
-| [**postAuthEmailVerifyRequest()**](AuthApi.md#postAuthEmailVerifyRequest) | **POST** /auth/email/verify/request | Request email verification code |
-| [**postAuthOauthPendingCompleteEmail()**](AuthApi.md#postAuthOauthPendingCompleteEmail) | **POST** /auth/oauth/pending/complete-email | Complete OAuth with email |
-| [**postAuthPhoneTelegramConfirm()**](AuthApi.md#postAuthPhoneTelegramConfirm) | **POST** /auth/phone/telegram/confirm | Confirm Telegram phone verification |
-| [**postAuthPhoneTelegramStart()**](AuthApi.md#postAuthPhoneTelegramStart) | **POST** /auth/phone/telegram/start | Start Telegram phone verification |
-| [**postAuthTokens()**](AuthApi.md#postAuthTokens) | **POST** /auth/tokens | Create authentication token |
-| [**postProfilesProfileIdIntegrationsIntegrationAuth2fa()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuth2fa) | **POST** /profiles/{profileId}/integrations/{integration}/auth/2fa | Submit 2FA password |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthLogout()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthLogout) | **POST** /profiles/{profileId}/integrations/{integration}/auth/logout | Logout profile |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/code | Confirm phone auth code |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/password | Submit phone auth password |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/start | Start phone auth |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/poll | Poll authorization |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthSmsStart()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthSmsStart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/start | Start SMS authorization |
-| [**postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/verify | Send authorization code |
-| [**postUsers()**](AuthApi.md#postUsers) | **POST** /users | Register new user |
-| [**profilesProfileIdIntegrationsIntegrationOauthCallbackGet()**](AuthApi.md#profilesProfileIdIntegrationsIntegrationOauthCallbackGet) | **GET** /profiles/{profileId}/integrations/{integration}/oauth/callback | VK OAuth callback |
-| [**putProfilesProfileIdIntegrationsIntegrationToken()**](AuthApi.md#putProfilesProfileIdIntegrationsIntegrationToken) | **PUT** /profiles/{profileId}/integrations/{integration}/token | Set bot token |
+| [**getProfilesProfileIdIntegrationsIntegrationAuthQr()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationAuthQr) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr | Получить QR-код для авторизации |
+| [**getProfilesProfileIdIntegrationsIntegrationAuthQrStatus()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationAuthQrStatus) | **GET** /profiles/{profileId}/integrations/{integration}/auth/qr/status | Получить статус QR-авторизации |
+| [**getProfilesProfileIdIntegrationsIntegrationGroups()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationGroups) | **GET** /profiles/{profileId}/integrations/{integration}/groups | Получить группы VK |
+| [**getProfilesProfileIdIntegrationsIntegrationOauthStart()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationOauthStart) | **GET** /profiles/{profileId}/integrations/{integration}/oauth/start | Начать OAuth для VK |
+| [**getProfilesProfileIdIntegrationsIntegrationSmtp()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationSmtp) | **GET** /profiles/{profileId}/integrations/{integration}/smtp | Получить SMTP-настройки профиля |
+| [**getProfilesProfileIdIntegrationsIntegrationToken()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationToken) | **GET** /profiles/{profileId}/integrations/{integration}/token | Получить токен бота |
+| [**getProfilesProfileIdIntegrationsIntegrationWabaTemplates()**](AuthApi.md#getProfilesProfileIdIntegrationsIntegrationWabaTemplates) | **GET** /profiles/{profileId}/integrations/{integration}/waba/templates | Шаблоны WABA |
+| [**postProfilesProfileIdIntegrationsIntegrationAuth2fa()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuth2fa) | **POST** /profiles/{profileId}/integrations/{integration}/auth/2fa | Отправить пароль 2FA |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthLogout()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthLogout) | **POST** /profiles/{profileId}/integrations/{integration}/auth/logout | Выйти из интеграции |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/code | Подтвердить код авторизации по телефону |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/confirm | Подтвердить вход по телефону |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/password | Отправить пароль второго фактора по телефону |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/phone/start | Начать авторизацию по телефону |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/poll | Проверить статус SMS-авторизации (MAX) |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthSmsStart()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthSmsStart) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/start | Начать SMS-авторизацию (MAX) |
+| [**postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify()**](AuthApi.md#postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify) | **POST** /profiles/{profileId}/integrations/{integration}/auth/sms/verify | Отправить код авторизации (MAX) |
+| [**putProfilesProfileIdIntegrationsIntegrationGroup()**](AuthApi.md#putProfilesProfileIdIntegrationsIntegrationGroup) | **PUT** /profiles/{profileId}/integrations/{integration}/group | Сохранить группу VK |
+| [**putProfilesProfileIdIntegrationsIntegrationSmtp()**](AuthApi.md#putProfilesProfileIdIntegrationsIntegrationSmtp) | **PUT** /profiles/{profileId}/integrations/{integration}/smtp | Сохранить SMTP-настройки профиля |
+| [**putProfilesProfileIdIntegrationsIntegrationToken()**](AuthApi.md#putProfilesProfileIdIntegrationsIntegrationToken) | **PUT** /profiles/{profileId}/integrations/{integration}/token | Сохранить токен бота |
 
-
-## `authOauthProviderCallbackGet()`
-
-```php
-authOauthProviderCallbackGet()
-```
-
-OAuth callback
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-
-try {
-    $apiInstance->authOauthProviderCallbackGet();
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->authOauthProviderCallbackGet: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `authOauthTelegramCompletePost()`
-
-```php
-authOauthTelegramCompletePost()
-```
-
-OAuth Telegram complete
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-
-try {
-    $apiInstance->authOauthTelegramCompletePost();
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->authOauthTelegramCompletePost: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `getAuthOauthProviderStart()`
-
-```php
-getAuthOauthProviderStart($provider, $origin): \Relaya\\Sdk\Model\OAuthStartOutputBody
-```
-
-Start OAuth authorization
-
-Creates OAuth state and returns provider authorization URL for popup flow.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$provider = 'provider_example'; // string | OAuth provider: github, discord, yandex, telegram, vk
-$origin = 'origin_example'; // string | Frontend origin for secure postMessage return target
-
-try {
-    $result = $apiInstance->getAuthOauthProviderStart($provider, $origin);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->getAuthOauthProviderStart: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **provider** | **string**| OAuth provider: github, discord, yandex, telegram, vk | |
-| **origin** | **string**| Frontend origin for secure postMessage return target | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\OAuthStartOutputBody**](../Model/OAuthStartOutputBody.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `getAuthOauthProviders()`
-
-```php
-getAuthOauthProviders(): \Relaya\\Sdk\Model\OAuthProvidersOutputBody
-```
-
-Get OAuth providers availability
-
-Returns social auth global flag and per-provider availability.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-
-try {
-    $result = $apiInstance->getAuthOauthProviders();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->getAuthOauthProviders: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-[**\Relaya\\Sdk\Model\OAuthProvidersOutputBody**](../Model/OAuthProvidersOutputBody.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
 
 ## `getProfilesProfileIdIntegrationsIntegrationAuthQr()`
 
 ```php
-getProfilesProfileIdIntegrationsIntegrationAuthQr($profile_id, $integration, $track_id): mixed
+getProfilesProfileIdIntegrationsIntegrationAuthQr($profile_id, $integration, $track_id): array<string,mixed>
 ```
 
-Get auth QR
+Получить QR-код для авторизации
+
+Возвращает QR-код или ссылку для входа во внешнюю интеграцию. Этот маршрут удобен, когда профиль нужно быстро авторизовать на другом устройстве без ручного ввода логина и пароля.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -260,23 +45,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string | Profile ID
-$integration = 'integration_example'; // string | Integration type
-$track_id = 'track_id_example'; // string
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$track_id = 'track_id_example'; // string | Параметр `trackId` из `query`.
 
 try {
     $result = $apiInstance->getProfilesProfileIdIntegrationsIntegrationAuthQr($profile_id, $integration, $track_id);
@@ -290,17 +72,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**| Profile ID | |
-| **integration** | **string**| Integration type | |
-| **track_id** | **string**|  | [optional] |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **track_id** | **string**| Параметр &#x60;trackId&#x60; из &#x60;query&#x60;. | [optional] |
 
 ### Return type
 
-**mixed**
+**array<string,mixed>**
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -314,10 +96,12 @@ try {
 ## `getProfilesProfileIdIntegrationsIntegrationAuthQrStatus()`
 
 ```php
-getProfilesProfileIdIntegrationsIntegrationAuthQrStatus($profile_id, $integration, $track_id): \Relaya\\Sdk\Model\QRStatusResponseBody
+getProfilesProfileIdIntegrationsIntegrationAuthQrStatus($profile_id, $integration, $track_id): \Relaya\Sdk\Model\QRStatusResponseBody
 ```
 
-Get QR auth status
+Получить статус QR-авторизации
+
+Показывает, завершилась ли авторизация по QR и можно ли переходить к следующему шагу. Обычно этот метод вызывают в цикле опроса после получения QR-кода.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -327,23 +111,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string
-$integration = 'integration_example'; // string | Integration type (telegram, whatsapp)
-$track_id = 'track_id_example'; // string
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$track_id = 'track_id_example'; // string | Параметр `trackId` из `query`.
 
 try {
     $result = $apiInstance->getProfilesProfileIdIntegrationsIntegrationAuthQrStatus($profile_id, $integration, $track_id);
@@ -357,17 +138,207 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**|  | |
-| **integration** | **string**| Integration type (telegram, whatsapp) | |
-| **track_id** | **string**|  | [optional] |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **track_id** | **string**| Параметр &#x60;trackId&#x60; из &#x60;query&#x60;. | [optional] |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\QRStatusResponseBody**](../Model/QRStatusResponseBody.md)
+[**\Relaya\Sdk\Model\QRStatusResponseBody**](../Model/QRStatusResponseBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`, `application/problem+json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getProfilesProfileIdIntegrationsIntegrationGroups()`
+
+```php
+getProfilesProfileIdIntegrationsIntegrationGroups($profile_id, $integration)
+```
+
+Получить группы VK
+
+Возвращает группы VK, доступные текущему профилю. Обычно этот список нужен, чтобы выбрать сообщество для дальнейшей привязки или настройки вебхука.  Только VK.  JWT пользователя или API-токен профиля.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
+
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+
+try {
+    $apiInstance->getProfilesProfileIdIntegrationsIntegrationGroups($profile_id, $integration);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->getProfilesProfileIdIntegrationsIntegrationGroups: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/problem+json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getProfilesProfileIdIntegrationsIntegrationOauthStart()`
+
+```php
+getProfilesProfileIdIntegrationsIntegrationOauthStart($profile_id, $integration)
+```
+
+Начать OAuth для VK
+
+Создает ссылку для OAuth-подключения VK к выбранному профилю. Метод нужен, когда пользователь инициирует подключение сообщества или группы VK из кабинета профиля.  Только VK.  JWT пользователя или API-токен профиля.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
+
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+
+try {
+    $apiInstance->getProfilesProfileIdIntegrationsIntegrationOauthStart($profile_id, $integration);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->getProfilesProfileIdIntegrationsIntegrationOauthStart: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/problem+json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getProfilesProfileIdIntegrationsIntegrationSmtp()`
+
+```php
+getProfilesProfileIdIntegrationsIntegrationSmtp($profile_id, $integration): \Relaya\Sdk\Model\EmailSMTPConfigResponseBody
+```
+
+Получить SMTP-настройки профиля
+
+Возвращает SMTP-параметры, связанные с выбранным профилем. Этот маршрут нужен для настройки email-канала и проверки, что профиль уже готов к отправке писем.  JWT пользователя или API-токен профиля.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
+
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+
+try {
+    $result = $apiInstance->getProfilesProfileIdIntegrationsIntegrationSmtp($profile_id, $integration);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->getProfilesProfileIdIntegrationsIntegrationSmtp: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+
+### Return type
+
+[**\Relaya\Sdk\Model\EmailSMTPConfigResponseBody**](../Model/EmailSMTPConfigResponseBody.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -381,10 +352,12 @@ try {
 ## `getProfilesProfileIdIntegrationsIntegrationToken()`
 
 ```php
-getProfilesProfileIdIntegrationsIntegrationToken($profile_id, $integration, $bot_token_input_body): \Relaya\\Sdk\Model\BotTokenResponseBody
+getProfilesProfileIdIntegrationsIntegrationToken($profile_id, $integration, $bot_token_input_body): \Relaya\Sdk\Model\BotTokenResponseBody
 ```
 
-Get bot token
+Получить токен бота
+
+Возвращает токен бота или связанные с ним признаки для выбранного профиля. Подходит для экранов настройки, где нужно показать, подключен ли бот и требуется ли повторная привязка.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -394,23 +367,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string
-$integration = 'integration_example'; // string | Integration type (maxbot, telegrambot, vk)
-$bot_token_input_body = new \Relaya\\Sdk\Model\BotTokenInputBody(); // \Relaya\\Sdk\Model\BotTokenInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$bot_token_input_body = {"$schema":"https://localhost:8485/v1/schemas/BotTokenInputBody.json","igUserID":"example","pageId":"example","phoneNumberId":"example","token":"rlp_live_1234567890abcdef","wabaBusinessId":"example"}; // \Relaya\Sdk\Model\BotTokenInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->getProfilesProfileIdIntegrationsIntegrationToken($profile_id, $integration, $bot_token_input_body);
@@ -424,17 +394,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**|  | |
-| **integration** | **string**| Integration type (maxbot, telegrambot, vk) | |
-| **bot_token_input_body** | [**\Relaya\\Sdk\Model\BotTokenInputBody**](../Model/BotTokenInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **bot_token_input_body** | [**\Relaya\Sdk\Model\BotTokenInputBody**](../Model/BotTokenInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\BotTokenResponseBody**](../Model/BotTokenResponseBody.md)
+[**\Relaya\Sdk\Model\BotTokenResponseBody**](../Model/BotTokenResponseBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -445,15 +415,15 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `getUsersExists()`
+## `getProfilesProfileIdIntegrationsIntegrationWabaTemplates()`
 
 ```php
-getUsersExists($email): \Relaya\\Sdk\Model\UserExistsResponseBody
+getProfilesProfileIdIntegrationsIntegrationWabaTemplates($profile_id, $integration): \Relaya\Sdk\Model\WABAMessageTemplatesResponseBody
 ```
 
-Check if user exists
+Шаблоны WABA
 
-Check if a user with the given email exists.
+Шаблоны WhatsApp Cloud API для интеграции `waba` / `whatsapp_cloud`.
 
 ### Example
 
@@ -462,19 +432,26 @@ Check if a user with the given email exists.
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$email = 'email_example'; // string | Email address to check
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
 
 try {
-    $result = $apiInstance->getUsersExists($email);
+    $result = $apiInstance->getProfilesProfileIdIntegrationsIntegrationWabaTemplates($profile_id, $integration);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling AuthApi->getUsersExists: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling AuthApi->getProfilesProfileIdIntegrationsIntegrationWabaTemplates: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -482,15 +459,16 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **email** | **string**| Email address to check | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\UserExistsResponseBody**](../Model/UserExistsResponseBody.md)
+[**\Relaya\Sdk\Model\WABAMessageTemplatesResponseBody**](../Model/WABAMessageTemplatesResponseBody.md)
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -501,365 +479,15 @@ No authorization required
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `postAuthEmailVerifyConfirm()`
-
-```php
-postAuthEmailVerifyConfirm($email_verify_confirm_input_body): \Relaya\\Sdk\Model\EmailVerifyConfirmResponseBody
-```
-
-Confirm email verification
-
-Confirms email verification using challenge ID and code.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
-$email_verify_confirm_input_body = new \Relaya\\Sdk\Model\EmailVerifyConfirmInputBody(); // \Relaya\\Sdk\Model\EmailVerifyConfirmInputBody
-
-try {
-    $result = $apiInstance->postAuthEmailVerifyConfirm($email_verify_confirm_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postAuthEmailVerifyConfirm: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **email_verify_confirm_input_body** | [**\Relaya\\Sdk\Model\EmailVerifyConfirmInputBody**](../Model/EmailVerifyConfirmInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\EmailVerifyConfirmResponseBody**](../Model/EmailVerifyConfirmResponseBody.md)
-
-### Authorization
-
-[BearerAuth](../../README.md#BearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `postAuthEmailVerifyRequest()`
-
-```php
-postAuthEmailVerifyRequest($email_verify_request_input_body): \Relaya\\Sdk\Model\EmailVerifyRequestResponseBody
-```
-
-Request email verification code
-
-Sends a verification code to the authenticated user's email.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
-$email_verify_request_input_body = new \Relaya\\Sdk\Model\EmailVerifyRequestInputBody(); // \Relaya\\Sdk\Model\EmailVerifyRequestInputBody
-
-try {
-    $result = $apiInstance->postAuthEmailVerifyRequest($email_verify_request_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postAuthEmailVerifyRequest: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **email_verify_request_input_body** | [**\Relaya\\Sdk\Model\EmailVerifyRequestInputBody**](../Model/EmailVerifyRequestInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\EmailVerifyRequestResponseBody**](../Model/EmailVerifyRequestResponseBody.md)
-
-### Authorization
-
-[BearerAuth](../../README.md#BearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `postAuthOauthPendingCompleteEmail()`
-
-```php
-postAuthOauthPendingCompleteEmail($o_auth_pending_complete_email_input_body): \Relaya\\Sdk\Model\OAuthResolveOutputBody
-```
-
-Complete OAuth with email
-
-Completes OAuth pending flow for providers that did not return an email.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$o_auth_pending_complete_email_input_body = new \Relaya\\Sdk\Model\OAuthPendingCompleteEmailInputBody(); // \Relaya\\Sdk\Model\OAuthPendingCompleteEmailInputBody
-
-try {
-    $result = $apiInstance->postAuthOauthPendingCompleteEmail($o_auth_pending_complete_email_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postAuthOauthPendingCompleteEmail: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **o_auth_pending_complete_email_input_body** | [**\Relaya\\Sdk\Model\OAuthPendingCompleteEmailInputBody**](../Model/OAuthPendingCompleteEmailInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\OAuthResolveOutputBody**](../Model/OAuthResolveOutputBody.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `postAuthPhoneTelegramConfirm()`
-
-```php
-postAuthPhoneTelegramConfirm($telegram_phone_verify_confirm_input_body): \Relaya\\Sdk\Model\TelegramPhoneVerifyConfirmResponseBody
-```
-
-Confirm Telegram phone verification
-
-Confirms Telegram phone verification using challenge ID and code.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
-$telegram_phone_verify_confirm_input_body = new \Relaya\\Sdk\Model\TelegramPhoneVerifyConfirmInputBody(); // \Relaya\\Sdk\Model\TelegramPhoneVerifyConfirmInputBody
-
-try {
-    $result = $apiInstance->postAuthPhoneTelegramConfirm($telegram_phone_verify_confirm_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postAuthPhoneTelegramConfirm: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **telegram_phone_verify_confirm_input_body** | [**\Relaya\\Sdk\Model\TelegramPhoneVerifyConfirmInputBody**](../Model/TelegramPhoneVerifyConfirmInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\TelegramPhoneVerifyConfirmResponseBody**](../Model/TelegramPhoneVerifyConfirmResponseBody.md)
-
-### Authorization
-
-[BearerAuth](../../README.md#BearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `postAuthPhoneTelegramStart()`
-
-```php
-postAuthPhoneTelegramStart($telegram_phone_verify_start_input_body): \Relaya\\Sdk\Model\TelegramPhoneVerifyStartResponseBody
-```
-
-Start Telegram phone verification
-
-Starts phone verification flow and returns challenge metadata.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
-$telegram_phone_verify_start_input_body = new \Relaya\\Sdk\Model\TelegramPhoneVerifyStartInputBody(); // \Relaya\\Sdk\Model\TelegramPhoneVerifyStartInputBody
-
-try {
-    $result = $apiInstance->postAuthPhoneTelegramStart($telegram_phone_verify_start_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postAuthPhoneTelegramStart: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **telegram_phone_verify_start_input_body** | [**\Relaya\\Sdk\Model\TelegramPhoneVerifyStartInputBody**](../Model/TelegramPhoneVerifyStartInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\TelegramPhoneVerifyStartResponseBody**](../Model/TelegramPhoneVerifyStartResponseBody.md)
-
-### Authorization
-
-[BearerAuth](../../README.md#BearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `postAuthTokens()`
-
-```php
-postAuthTokens($auth_token_input_body): \Relaya\\Sdk\Model\AuthTokenOutputBody
-```
-
-Create authentication token
-
-Issue a JWT authentication token for a user given email/password.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$auth_token_input_body = new \Relaya\\Sdk\Model\AuthTokenInputBody(); // \Relaya\\Sdk\Model\AuthTokenInputBody
-
-try {
-    $result = $apiInstance->postAuthTokens($auth_token_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postAuthTokens: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **auth_token_input_body** | [**\Relaya\\Sdk\Model\AuthTokenInputBody**](../Model/AuthTokenInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\AuthTokenOutputBody**](../Model/AuthTokenOutputBody.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
 ## `postProfilesProfileIdIntegrationsIntegrationAuth2fa()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuth2fa($profile_id, $integration, $password2_fa_input_body): mixed
+postProfilesProfileIdIntegrationsIntegrationAuth2fa($profile_id, $integration, $password2_fa_input_body): array<string,mixed>
 ```
 
-Submit 2FA password
+Отправить пароль 2FA
+
+Передает пароль второго фактора в уже начатый сценарий авторизации. Нужен только тогда, когда внешний сервис запросил дополнительное подтверждение после основного входа.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -869,23 +497,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string | Profile ID
-$integration = 'integration_example'; // string | Integration type
-$password2_fa_input_body = new \Relaya\\Sdk\Model\Password2FAInputBody(); // \Relaya\\Sdk\Model\Password2FAInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$password2_fa_input_body = {"$schema":"https://localhost:8485/v1/schemas/Password2FAInputBody.json","password":"example","trackId":"example"}; // \Relaya\Sdk\Model\Password2FAInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuth2fa($profile_id, $integration, $password2_fa_input_body);
@@ -899,17 +524,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**| Profile ID | |
-| **integration** | **string**| Integration type | |
-| **password2_fa_input_body** | [**\Relaya\\Sdk\Model\Password2FAInputBody**](../Model/Password2FAInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **password2_fa_input_body** | [**\Relaya\Sdk\Model\Password2FAInputBody**](../Model/Password2FAInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-**mixed**
+**array<string,mixed>**
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -923,10 +548,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthLogout()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthLogout($profile_id, $integration): \Relaya\\Sdk\Model\LogoutBody
+postProfilesProfileIdIntegrationsIntegrationAuthLogout($profile_id, $integration): \Relaya\Sdk\Model\LogoutBody
 ```
 
-Logout profile
+Выйти из интеграции
+
+Завершает внешнюю авторизацию профиля. Используйте метод для перевхода, смены аккаунта или сброса проблемной сессии.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -936,22 +563,19 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string | Profile ID
-$integration = 'integration_example'; // string | Integration type
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthLogout($profile_id, $integration);
@@ -965,16 +589,16 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**| Profile ID | |
-| **integration** | **string**| Integration type | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\LogoutBody**](../Model/LogoutBody.md)
+[**\Relaya\Sdk\Model\LogoutBody**](../Model/LogoutBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -988,10 +612,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode($profile_id, $integration, $phone_auth_code_input_body): \Relaya\\Sdk\Model\PhoneAuthCodeResponseBody
+postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode($profile_id, $integration, $phone_auth_code_input_body): \Relaya\Sdk\Model\PhoneAuthCodeResponseBody
 ```
 
-Confirm phone auth code
+Подтвердить код авторизации по телефону
+
+Передает код, который пользователь получил в рамках входа по номеру телефона. Это основной шаг после старта сценария авторизации.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1001,23 +627,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string
-$integration = 'integration_example'; // string | Integration type (telegram)
-$phone_auth_code_input_body = new \Relaya\\Sdk\Model\PhoneAuthCodeInputBody(); // \Relaya\\Sdk\Model\PhoneAuthCodeInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$phone_auth_code_input_body = {"$schema":"https://localhost:8485/v1/schemas/PhoneAuthCodeInputBody.json","code":"example","token":"rlp_live_1234567890abcdef","trackId":"example"}; // \Relaya\Sdk\Model\PhoneAuthCodeInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthPhoneCode($profile_id, $integration, $phone_auth_code_input_body);
@@ -1031,17 +654,83 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**|  | |
-| **integration** | **string**| Integration type (telegram) | |
-| **phone_auth_code_input_body** | [**\Relaya\\Sdk\Model\PhoneAuthCodeInputBody**](../Model/PhoneAuthCodeInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **phone_auth_code_input_body** | [**\Relaya\Sdk\Model\PhoneAuthCodeInputBody**](../Model/PhoneAuthCodeInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\PhoneAuthCodeResponseBody**](../Model/PhoneAuthCodeResponseBody.md)
+[**\Relaya\Sdk\Model\PhoneAuthCodeResponseBody**](../Model/PhoneAuthCodeResponseBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`, `application/problem+json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm()`
+
+```php
+postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm($profile_id, $integration, $phone_auth_confirm_input_body): \Relaya\Sdk\Model\PhoneAuthConfirmResponseBody
+```
+
+Подтвердить вход по телефону
+
+Завершает phone-login мессенджера (код из SMS) для интеграции профиля.  JWT пользователя или API-токен профиля.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
+
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$phone_auth_confirm_input_body = {"$schema":"https://localhost:8485/v1/schemas/PhoneAuthConfirmInputBody.json","firstName":"example","lastName":"example","token":"rlp_live_1234567890abcdef"}; // \Relaya\Sdk\Model\PhoneAuthConfirmInputBody | Параметры JSON-запроса.
+
+try {
+    $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm($profile_id, $integration, $phone_auth_confirm_input_body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->postProfilesProfileIdIntegrationsIntegrationAuthPhoneConfirm: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **phone_auth_confirm_input_body** | [**\Relaya\Sdk\Model\PhoneAuthConfirmInputBody**](../Model/PhoneAuthConfirmInputBody.md)| Параметры JSON-запроса. | |
+
+### Return type
+
+[**\Relaya\Sdk\Model\PhoneAuthConfirmResponseBody**](../Model/PhoneAuthConfirmResponseBody.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -1055,10 +744,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword($profile_id, $integration, $phone_auth_password_input_body): \Relaya\\Sdk\Model\PhoneAuthPasswordResponseBody
+postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword($profile_id, $integration, $phone_auth_password_input_body): \Relaya\Sdk\Model\PhoneAuthPasswordResponseBody
 ```
 
-Submit phone auth password
+Отправить пароль второго фактора по телефону
+
+Передает пароль второго фактора для сценариев телефонной авторизации, где одного кода недостаточно. Обычно этот маршрут используют только при явном запросе со стороны внешнего сервиса.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1068,23 +759,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string
-$integration = 'integration_example'; // string | Integration type (telegram)
-$phone_auth_password_input_body = new \Relaya\\Sdk\Model\PhoneAuthPasswordInputBody(); // \Relaya\\Sdk\Model\PhoneAuthPasswordInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$phone_auth_password_input_body = {"$schema":"https://localhost:8485/v1/schemas/PhoneAuthPasswordInputBody.json","password":"example","trackId":"example"}; // \Relaya\Sdk\Model\PhoneAuthPasswordInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthPhonePassword($profile_id, $integration, $phone_auth_password_input_body);
@@ -1098,17 +786,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**|  | |
-| **integration** | **string**| Integration type (telegram) | |
-| **phone_auth_password_input_body** | [**\Relaya\\Sdk\Model\PhoneAuthPasswordInputBody**](../Model/PhoneAuthPasswordInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **phone_auth_password_input_body** | [**\Relaya\Sdk\Model\PhoneAuthPasswordInputBody**](../Model/PhoneAuthPasswordInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\PhoneAuthPasswordResponseBody**](../Model/PhoneAuthPasswordResponseBody.md)
+[**\Relaya\Sdk\Model\PhoneAuthPasswordResponseBody**](../Model/PhoneAuthPasswordResponseBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -1122,10 +810,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart($profile_id, $integration, $phone_auth_start_input_body): \Relaya\\Sdk\Model\PhoneAuthStartResponseBody
+postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart($profile_id, $integration, $phone_auth_start_input_body): \Relaya\Sdk\Model\PhoneAuthStartResponseBody
 ```
 
-Start phone auth
+Начать авторизацию по телефону
+
+Запускает вход через номер телефона и подготавливает профиль к следующему шагу авторизации. Обычно после этого пользователь получает код или дополнительный challenge.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1135,23 +825,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string
-$integration = 'integration_example'; // string | Integration type (telegram)
-$phone_auth_start_input_body = new \Relaya\\Sdk\Model\PhoneAuthStartInputBody(); // \Relaya\\Sdk\Model\PhoneAuthStartInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$phone_auth_start_input_body = {"$schema":"https://localhost:8485/v1/schemas/PhoneAuthStartInputBody.json","phone":"+79991234567"}; // \Relaya\Sdk\Model\PhoneAuthStartInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthPhoneStart($profile_id, $integration, $phone_auth_start_input_body);
@@ -1165,17 +852,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**|  | |
-| **integration** | **string**| Integration type (telegram) | |
-| **phone_auth_start_input_body** | [**\Relaya\\Sdk\Model\PhoneAuthStartInputBody**](../Model/PhoneAuthStartInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **phone_auth_start_input_body** | [**\Relaya\Sdk\Model\PhoneAuthStartInputBody**](../Model/PhoneAuthStartInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\PhoneAuthStartResponseBody**](../Model/PhoneAuthStartResponseBody.md)
+[**\Relaya\Sdk\Model\PhoneAuthStartResponseBody**](../Model/PhoneAuthStartResponseBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -1189,10 +876,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll($profile_id, $integration, $poll_authorization_input_body): \Relaya\\Sdk\Model\PollAuthorizationBody
+postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll($profile_id, $integration, $poll_authorization_input_body): \Relaya\Sdk\Model\PollAuthorizationBody
 ```
 
-Poll authorization
+Проверить статус SMS-авторизации (MAX)
+
+Возвращает текущее состояние SMS-авторизации и помогает понять, завершился ли вход. Этот маршрут удобно вызывать из фронтенда, пока внешний сервис не подтвердит авторизацию окончательно.  Только MAX (`integration=max`).  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1202,23 +891,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string | Profile ID
-$integration = 'integration_example'; // string | Integration type
-$poll_authorization_input_body = new \Relaya\\Sdk\Model\PollAuthorizationInputBody(); // \Relaya\\Sdk\Model\PollAuthorizationInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$poll_authorization_input_body = {"$schema":"https://localhost:8485/v1/schemas/PollAuthorizationInputBody.json","trackId":"example"}; // \Relaya\Sdk\Model\PollAuthorizationInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthSmsPoll($profile_id, $integration, $poll_authorization_input_body);
@@ -1232,17 +918,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**| Profile ID | |
-| **integration** | **string**| Integration type | |
-| **poll_authorization_input_body** | [**\Relaya\\Sdk\Model\PollAuthorizationInputBody**](../Model/PollAuthorizationInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **poll_authorization_input_body** | [**\Relaya\Sdk\Model\PollAuthorizationInputBody**](../Model/PollAuthorizationInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\PollAuthorizationBody**](../Model/PollAuthorizationBody.md)
+[**\Relaya\Sdk\Model\PollAuthorizationBody**](../Model/PollAuthorizationBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -1256,10 +942,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthSmsStart()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthSmsStart($profile_id, $integration, $start_authorization_input_body): \Relaya\\Sdk\Model\StartAuthorizationBody
+postProfilesProfileIdIntegrationsIntegrationAuthSmsStart($profile_id, $integration, $start_authorization_input_body): \Relaya\Sdk\Model\StartAuthorizationBody
 ```
 
-Start SMS authorization
+Начать SMS-авторизацию (MAX)
+
+Запускает вход в MAX по номеру телефона и подготавливает сессию для отправки кода подтверждения. Это первый шаг в цепочке `start -> verify -> poll`.  Только MAX (`integration=max`).  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1269,23 +957,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string | Profile ID
-$integration = 'integration_example'; // string | Integration type
-$start_authorization_input_body = new \Relaya\\Sdk\Model\StartAuthorizationInputBody(); // \Relaya\\Sdk\Model\StartAuthorizationInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$start_authorization_input_body = {"$schema":"https://localhost:8485/v1/schemas/StartAuthorizationInputBody.json","phoneNumber":1}; // \Relaya\Sdk\Model\StartAuthorizationInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthSmsStart($profile_id, $integration, $start_authorization_input_body);
@@ -1299,17 +984,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**| Profile ID | |
-| **integration** | **string**| Integration type | |
-| **start_authorization_input_body** | [**\Relaya\\Sdk\Model\StartAuthorizationInputBody**](../Model/StartAuthorizationInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **start_authorization_input_body** | [**\Relaya\Sdk\Model\StartAuthorizationInputBody**](../Model/StartAuthorizationInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\StartAuthorizationBody**](../Model/StartAuthorizationBody.md)
+[**\Relaya\Sdk\Model\StartAuthorizationBody**](../Model/StartAuthorizationBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -1323,10 +1008,12 @@ try {
 ## `postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify()`
 
 ```php
-postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify($profile_id, $integration, $send_authorization_code_input_body): \Relaya\\Sdk\Model\SendAuthorizationCodeBody
+postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify($profile_id, $integration, $send_authorization_code_input_body): \Relaya\Sdk\Model\SendAuthorizationCodeBody
 ```
 
-Send authorization code
+Отправить код авторизации (MAX)
+
+Передает код подтверждения в MAX и продолжает процесс входа. После этого обычно остается короткий опрос статуса, пока профиль не перейдет в состояние `authorized`.  Только MAX (`integration=max`).  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1336,23 +1023,20 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string | Profile ID
-$integration = 'integration_example'; // string | Integration type
-$send_authorization_code_input_body = new \Relaya\\Sdk\Model\SendAuthorizationCodeInputBody(); // \Relaya\\Sdk\Model\SendAuthorizationCodeInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$send_authorization_code_input_body = {"$schema":"https://localhost:8485/v1/schemas/SendAuthorizationCodeInputBody.json","code":"example"}; // \Relaya\Sdk\Model\SendAuthorizationCodeInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->postProfilesProfileIdIntegrationsIntegrationAuthSmsVerify($profile_id, $integration, $send_authorization_code_input_body);
@@ -1366,17 +1050,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**| Profile ID | |
-| **integration** | **string**| Integration type | |
-| **send_authorization_code_input_body** | [**\Relaya\\Sdk\Model\SendAuthorizationCodeInputBody**](../Model/SendAuthorizationCodeInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **send_authorization_code_input_body** | [**\Relaya\Sdk\Model\SendAuthorizationCodeInputBody**](../Model/SendAuthorizationCodeInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\SendAuthorizationCodeBody**](../Model/SendAuthorizationCodeBody.md)
+[**\Relaya\Sdk\Model\SendAuthorizationCodeBody**](../Model/SendAuthorizationCodeBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -1387,121 +1071,15 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `postUsers()`
+## `putProfilesProfileIdIntegrationsIntegrationGroup()`
 
 ```php
-postUsers($create_user_input_body): \Relaya\\Sdk\Model\CreateUserResponseBody
+putProfilesProfileIdIntegrationsIntegrationGroup($profile_id, $integration)
 ```
 
-Register new user
+Сохранить группу VK
 
-Create a new user account with email and password.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$create_user_input_body = new \Relaya\\Sdk\Model\CreateUserInputBody(); // \Relaya\\Sdk\Model\CreateUserInputBody
-
-try {
-    $result = $apiInstance->postUsers($create_user_input_body);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->postUsers: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **create_user_input_body** | [**\Relaya\\Sdk\Model\CreateUserInputBody**](../Model/CreateUserInputBody.md)|  | |
-
-### Return type
-
-[**\Relaya\\Sdk\Model\CreateUserResponseBody**](../Model/CreateUserResponseBody.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/problem+json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `profilesProfileIdIntegrationsIntegrationOauthCallbackGet()`
-
-```php
-profilesProfileIdIntegrationsIntegrationOauthCallbackGet()
-```
-
-VK OAuth callback
-
-OAuth callback endpoint for VK ID authorization.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-
-try {
-    $apiInstance->profilesProfileIdIntegrationsIntegrationOauthCallbackGet();
-} catch (Exception $e) {
-    echo 'Exception when calling AuthApi->profilesProfileIdIntegrationsIntegrationOauthCallbackGet: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `putProfilesProfileIdIntegrationsIntegrationToken()`
-
-```php
-putProfilesProfileIdIntegrationsIntegrationToken($profile_id, $integration, $bot_token_input_body): \Relaya\\Sdk\Model\BotTokenSetResponseBody
-```
-
-Set bot token
+Привязывает выбранную группу VK к профилю. После этого профиль может работать от имени нужного сообщества и использовать VK-специфичные возможности.  Только VK.  JWT пользователя или API-токен профиля.
 
 ### Example
 
@@ -1511,23 +1089,149 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: ApiKeyAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
-
-// Configure Bearer (JWT) authorization: BearerAuth
-$config = Relaya\\Sdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
 
 
-$apiInstance = new Relaya\\Sdk\Api\AuthApi(
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$profile_id = 'profile_id_example'; // string
-$integration = 'integration_example'; // string | Integration type (maxbot, telegrambot, vk)
-$bot_token_input_body = new \Relaya\\Sdk\Model\BotTokenInputBody(); // \Relaya\\Sdk\Model\BotTokenInputBody
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+
+try {
+    $apiInstance->putProfilesProfileIdIntegrationsIntegrationGroup($profile_id, $integration);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->putProfilesProfileIdIntegrationsIntegrationGroup: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/problem+json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `putProfilesProfileIdIntegrationsIntegrationSmtp()`
+
+```php
+putProfilesProfileIdIntegrationsIntegrationSmtp($profile_id, $integration, $email_smtp_set_input_body): \Relaya\Sdk\Model\EmailSMTPSetResponseBody
+```
+
+Сохранить SMTP-настройки профиля
+
+Сохраняет SMTP-параметры для email-профиля. Используйте метод после ввода логина, пароля, сервера и других настроек исходящей почты.  JWT пользователя или API-токен профиля.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
+
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$email_smtp_set_input_body = {"$schema":"https://localhost:8485/v1/schemas/EmailSMTPSetInputBody.json","from":"2026-04-01","host":"example","password":"example","port":1,"username":"example"}; // \Relaya\Sdk\Model\EmailSMTPSetInputBody | Параметры JSON-запроса.
+
+try {
+    $result = $apiInstance->putProfilesProfileIdIntegrationsIntegrationSmtp($profile_id, $integration, $email_smtp_set_input_body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AuthApi->putProfilesProfileIdIntegrationsIntegrationSmtp: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **email_smtp_set_input_body** | [**\Relaya\Sdk\Model\EmailSMTPSetInputBody**](../Model/EmailSMTPSetInputBody.md)| Параметры JSON-запроса. | |
+
+### Return type
+
+[**\Relaya\Sdk\Model\EmailSMTPSetResponseBody**](../Model/EmailSMTPSetResponseBody.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`, `application/problem+json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `putProfilesProfileIdIntegrationsIntegrationToken()`
+
+```php
+putProfilesProfileIdIntegrationsIntegrationToken($profile_id, $integration, $bot_token_input_body): \Relaya\Sdk\Model\BotTokenSetResponseBody
+```
+
+Сохранить токен бота
+
+Сохраняет новый токен бота для профиля. Обычно метод вызывают при первичной настройке интеграции или при замене компрометированного токена.  Для MAX Bot Релая сразу валидирует token через MAX API и автоматически настраивает входящую webhook-подписку профиля на стороне MAX.  JWT пользователя или API-токен профиля.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKey('X-Profile-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Relaya\Sdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-Profile-Token', 'Bearer');
+
+
+$apiInstance = new Relaya\Sdk\Api\AuthApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$profile_id = 7fa3c1d942be; // string | Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка.
+$integration = max; // string | Код интеграции профиля: например `max`, `vk`, `telegram`, `telegrambot`, `maxbot`, `whatsapp` или `email`.
+$bot_token_input_body = {$schema=https://localhost:8485/v1/schemas/BotTokenInputBody.json, igUserID=example, pageId=example, phoneNumberId=example, token=rlp_live_1234567890abcdef, wabaBusinessId=example}; // \Relaya\Sdk\Model\BotTokenInputBody | Параметры JSON-запроса.
 
 try {
     $result = $apiInstance->putProfilesProfileIdIntegrationsIntegrationToken($profile_id, $integration, $bot_token_input_body);
@@ -1541,17 +1245,17 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **profile_id** | **string**|  | |
-| **integration** | **string**| Integration type (maxbot, telegrambot, vk) | |
-| **bot_token_input_body** | [**\Relaya\\Sdk\Model\BotTokenInputBody**](../Model/BotTokenInputBody.md)|  | |
+| **profile_id** | **string**| Идентификатор профиля Релая. Для новых профилей это 12-символьная hex-строка. | |
+| **integration** | **string**| Код интеграции профиля: например &#x60;max&#x60;, &#x60;vk&#x60;, &#x60;telegram&#x60;, &#x60;telegrambot&#x60;, &#x60;maxbot&#x60;, &#x60;whatsapp&#x60; или &#x60;email&#x60;. | |
+| **bot_token_input_body** | [**\Relaya\Sdk\Model\BotTokenInputBody**](../Model/BotTokenInputBody.md)| Параметры JSON-запроса. | |
 
 ### Return type
 
-[**\Relaya\\Sdk\Model\BotTokenSetResponseBody**](../Model/BotTokenSetResponseBody.md)
+[**\Relaya\Sdk\Model\BotTokenSetResponseBody**](../Model/BotTokenSetResponseBody.md)
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**chat_id** | **string** |  | [optional]
-**message_id** | **string** |  | [optional]
-**video_id** | **int** |  |
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**chat_id** | **string** | Идентификатор адресата в интеграции. Для MAX Bot используйте &#x60;user:1234567890&#x60; для личного диалога или &#x60;chat:1234567890&#x60; для чата. | [optional]
+**message_id** | **string** | Идентификатор сообщения внутри интеграции. | [optional]
+**video_id** | **int** | Идентификатор записи или внешнего ресурса. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

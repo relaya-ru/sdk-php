@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**chat_id** | **string** |  |
-**message_id** | **string** |  |
-**remove_reaction** | **bool** |  |
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**chat_id** | **string** | Идентификатор адресата в интеграции. Для MAX Bot используйте &#x60;user:1234567890&#x60; для личного диалога или &#x60;chat:1234567890&#x60; для чата. |
+**message_id** | **string** | Идентификатор сообщения внутри интеграции. |
+**remove_reaction** | **bool** | Показывает, нужно ли снять реакцию. |
 **result** | **mixed** |  | [optional]
-**seq** | **int** |  |
+**seq** | **int** | Последовательный номер команды или события MAX/WebSocket. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

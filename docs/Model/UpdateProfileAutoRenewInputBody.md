@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
-**auto_renew** | **bool** | Whether auto-renewal is enabled |
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
+**auto_renew** | **bool** | Показывает, включено ли автопродление. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

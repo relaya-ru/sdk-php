@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schema** | **string** | A URL to the JSON Schema for this object. | [optional] [readonly]
+**schema** | **string** | Ссылка на JSON Schema этой модели. | [optional] [readonly]
 **items** | **mixed** |  |
-**total** | **int** |  |
+**total** | **int** | Общее количество элементов без учета пагинации. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
